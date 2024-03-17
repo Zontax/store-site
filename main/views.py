@@ -17,7 +17,7 @@ def index(request):
 
 def about(request):
     context = {
-        'title': 'Головна',
+        'title': 'Про нас',
         'content': 'Про нас',
         'description': 'Це сайт магазину меблів',
         'list': ['first', 'second'],
