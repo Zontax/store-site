@@ -6,23 +6,7 @@
 <div class="container">
     <!-- Каталог и корзина с фиксированным расположением на странице -->
     <div class="row mt-1 position-fixed z-3">
-        <!-- Каталог -->
-        <div class="dropdown mb-2">
-            <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Каталог
-                <img class="mx-1" src="../deps/icons/grid-fill.svg" alt="Catalog Icon" width="16" height="16">
-            </button>
-            <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Все товары</a></li>
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Кухня</a></li>
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Спальня</a></li>
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Гостинная</a></li>
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Офис</a></li>
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Фурнитура</a></li>
-                <li><a class="dropdown-item text-white" href="../goods/catalog.html">Декор</a></li>
-            </ul>
-        </div>
+
         <!-- Значек корзины, вызывает модальное окно -->
         <div>
             <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton" aria-expanded="false">
@@ -90,14 +74,12 @@
                 </div>
             </div>
         </div>
-        <!-- Закончилась разметка модального окна -->
     </div>
 </div>
 <!-- Контент -->
 <div class="container">
     <div class="row mt-1">
         <div class="col-lg-2">
-            <!-- Пустой блок на усмотрение -->
         </div>
         <div class="col-lg-10">
             <!-- Контент на странице -->
@@ -106,11 +88,16 @@
                     <div class="row">
                         <!-- Миниатюры -->
                         <div class="col-md-4">
-                            <img src="../deps/images/goods/set of tea table and three chairs.jpg" class="img-thumbnail"
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" class="img-thumbnail" data-bs-toggle="modal"
+                                data-bs-target="#imageModal1">
+                            {% else %}
+                            <img src="{% static 'images/Not found image.png' %}" class="img-thumbnail"
                                 data-bs-toggle="modal" data-bs-target="#imageModal1">
+                            {% endif %}
                         </div>
                         <div class="col-md-4 ">
-                            <p class="product_id mt-3">id: 002654</p>
+                            <p class="product_id mt-3">id: {{ product.display_id }}</p>
                         </div>
                         <!-- Увеличить изображение в модальном окне -->
                         <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label"
@@ -118,25 +105,25 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="imageModal1Label">Изображение 1</h5>
+                                        <h5 class="modal-title" id="imageModal1Label">Зображення 1</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Закрыть"></button>
                                     </div>
+                                    {% if product.image %}
                                     <div class="modal-body">
-                                        <img src="../deps/images/goods/set of tea table and three chairs.jpg"
-                                            class="img-fluid" alt="Изображение 1">
+                                        <img src="{{ product.image.url }}" class="img-fluid" alt="Зображение">
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Описание товара -->
                     <div class="card-body">
-                        <p class="card-text">Цена: <strong>150.00 $</strong></p>
-                        <h5 class="card-title">Чайный столик и три стула</h5>
-                        <p class="card-text">Комплект из трёх стульев и дизайнерский столик для гостинной
-                            комнаты.</p>
-                        <a href="#" class="btn btn-dark add-to-cart">Добавить в корзину</a>
+                        <p class="card-text">Ціна: <strong>{{ product.sell_price|floatformat:'0' }}</strong> Грн</p>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <a href="#" class="btn btn-dark add-to-cart">Додати в корзину</a>
                     </div>
                 </div>
             </div>

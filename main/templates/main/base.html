@@ -30,19 +30,15 @@
                         Каталог
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li>
-                            <a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Усі товари</a>
-                        </li>
                         {% for category in all_categories %}
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}{{ category.slug }}">
+                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">
                                 {{ category.name }}</a>
                         </li>
                         {% endfor %}
                     </ul>
                 </li>
                 </li>
-                <li><a href="{% url 'catalog:product' %}" class="nav-link px-2 link-body-emphasis">Товар</a></li>
-                <li><a href="{% url 'catalog:index' %}" class="nav-link px-2 link-body-emphasis">Замовлення</a></li>
+                <li><a href="#" class="nav-link px-2 link-body-emphasis">Замовлення</a></li>
                 <li><a href="{% url 'main:about' %}" class="nav-link px-2 link-body-emphasis">Про нас</a></li>
             </ul>
 
@@ -70,7 +66,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-white">
+    <!-- <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-white">
         <div class="col-md-4 d-flex align-items-center">
             <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
                 <svg class="bi" width="30" height="24">
@@ -88,7 +84,7 @@
                     <i class="bi bi-facebook"></i>
             </li>
         </ul>
-    </footer>
+    </footer> -->
 
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery-validation/dist/jquery.validate.min.js' %}"></script>

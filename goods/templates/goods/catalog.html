@@ -128,15 +128,18 @@
                 <div class="col-lg-4 col-md-6 p-4">
                     <div class="card border-primary rounded custom-shadow">
 
-                        {% if product.image %}
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                        {% else %}
-                        <img src="{% static 'images/Not found image.png' %}" class="card-img-top"
-                            alt="{{ product.name }}">
-                        {% endif %}
+                        <a href="{% url 'catalog:product' product.slug %}">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            {% else %}
+                            <img src="{% static 'images/Not found image.png' %}" class="card-img-top"
+                                alt="{{ product.name }}">
+                            {% endif %}
+                        </a>
+
 
                         <div class="card-body">
-                            <a href="{% url 'catalog:product' %}">
+                            <a href="{% url 'catalog:product' product.slug %}">
                                 <p class="card-title">{{ product.name }}</p>
                             </a>
                             <p class="card-text text-truncate">{{ product.description }}</p>
@@ -166,13 +169,13 @@
                 <ul class="pagination justify-content-center my-4">
                     <div class="custom-shadow d-flex">
                         <li class="page-item disabled">
-                            <a class="page-link" href="{% url 'catalog:index' %}">Назад</a>
+                            <a class="page-link" href="">Назад</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="{% url 'catalog:index' %}">1</a></li>
-                        <li class="page-item"><a class="page-link" href="{% url 'catalog:index' %}">2</a></li>
-                        <li class="page-item"><a class="page-link" href="{% url 'catalog:index' %}">3</a></li>
+                        <li class="page-item"><a class="page-link" href="">1</a></li>
+                        <li class="page-item"><a class="page-link" href="">2</a></li>
+                        <li class="page-item"><a class="page-link" href="">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'catalog:index' %}">Вперед</a>
+                            <a class="page-link" href="">Вперед</a>
                         </li>
                     </div>
                 </ul>
