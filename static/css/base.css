@@ -60,6 +60,14 @@ a:active {
     content: none;
 }
 
+p.card-title {
+    color: black;
+}
+
+p.card-text {
+    color: rgb(128, 128, 128);
+}
+
 .product_id {
     color: gray;
     font-size: 15px;

@@ -17,7 +17,7 @@ class Category(Model):
 class Product(Model):
     name = CharField(max_length=150, unique=True, verbose_name='Назва')
     slug = SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL Slug')
-    description = TextField(max_length=200, blank=True, null=True, verbose_name='Опис')
+    description = TextField(max_length=600, blank=True, null=True, verbose_name='Опис')
     image = ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Зображення')
     price = DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Ціна')
     discount = DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Знижка')
@@ -30,4 +30,15 @@ class Product(Model):
         verbose_name_plural = 'Продукти'
         
     def __str__(self):
-        return f'{self.name} - {self.quantity} шт.' 
+        img = '(зображення) ' if self.image else ''  # Відображається, якщо є зображення
+        disc = f'(Знижка: {self.discount})' if self.discount > 0 else ''  # Відображається, якщо є знижка
+        return f'{img}{self.name} - Ціна: {round(self.price)} {disc} - Кількість: {self.quantity} шт.'
+
+    def display_id(self): # Велике id
+        return f'{self.id:05}' 
+    
+    def sell_price(self): # Ціна зі знижкою 
+        if self.discount:   
+            return round(self.price - self.price * (self.discount / 100), 2) 
+        
+        return self.price
