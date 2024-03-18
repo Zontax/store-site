@@ -26,8 +26,9 @@ class Product(Model):
     
     class Meta():
         db_table = 'goods_products'
-        verbose_name = 'Продукт'
-        verbose_name_plural = 'Продукти'
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товари'
+        ordering = ('id',)
         
     def __str__(self):
         img = '(зображення) ' if self.image else ''  # Відображається, якщо є зображення
