@@ -81,7 +81,7 @@
         </div>
         <div class="col-lg-10">
             <div class="row">
-                <!-- Форма филітрів -->
+                <!-- Форма фільтрів -->
                 <div class="dropdown mb-2">
                     <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -133,7 +133,7 @@
                                 <p class="card-title">{{ product.name }}</p>
                             </a>
                             <p class="card-text text-truncate">{{ product.description }}</p>
-                            <p class="product_id">id: 02265</p>
+                            <p class="product_id">id: {{ product.id }}</p>
                             <div class="d-flex justify-content-between">
                                 <p><s>{{ product.price }}</s> Грн</p>
                                 <!-- <p><strong>90.00 Грн</strong></p> -->
@@ -165,8 +165,6 @@
                     </div>
                 </ul>
             </nav>
-            <br>
-            <br>
             <br>
         </div>
     </div>

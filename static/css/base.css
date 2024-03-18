@@ -7,16 +7,53 @@ body.body {
     height: 100%;
 }
 
-main .container {
+main div.container {
     padding: 0px 1.5%;
 }
 
 footer {
+    background-color: aliceblue;
     position: fixed;
     left: 0px;
-    bottom: 0px;
-    height: 0px;
+    bottom: 0;
     width: 100%;
+    height: auto;
+}
+
+a {
+    color: rgb(223, 223, 223);
+}
+
+a:hover {
+    color: rgb(147, 147, 147);
+}
+
+a:active {
+    color: rgb(81, 81, 81);
+}
+
+.nav-link.dropdown-toggle {
+    color: rgb(223, 223, 223);
+}
+
+.nav-link.dropdown-toggle:hover {
+    color: rgb(147, 147, 147);
+}
+
+.nav-link.dropdown-toggle:active {
+    color: rgb(81, 81, 81);
+}
+
+.nav-link {
+    color: rgb(223, 223, 223);
+}
+
+.nav-link:hover {
+    color: rgb(147, 147, 147);
+}
+
+.nav-link:active {
+    color: rgb(81, 81, 81);
 }
 
 .dropdown-toggle::after {

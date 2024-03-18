@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from goods.models import Categories
+from goods.models import Category
 
 
 def base_processors(request):
-    categories = Categories.objects.all()
+    categories = Category.objects.all()
     current_year = datetime.now().year
     return { 'current_year': current_year, 'categories': categories  }
 

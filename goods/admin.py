@@ -1,14 +1,13 @@
 from django.contrib import admin
-from goods.models import Categories, Products
-from main.models import TestTable
+from goods.models import Category, Product
 
-admin.site.register(TestTable)
+# admin.site.register(Category)
 
 # Автозаповнення для slug
-@admin.register(Categories)
-class CategoriesAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     
-@admin.register(Products)
-class ProductsAdmin(admin.ModelAdmin):
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
