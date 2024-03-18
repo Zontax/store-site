@@ -29,13 +29,11 @@
                         Каталог
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Всі товари</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Кухня</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Спальня</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Гостинна</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Офіс</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Фурнітура</a></li>
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">Декор</a></li>
+                        {% for category in categories %}
+                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}{{ category.slug }}">
+                                {{ category.name }}</a>
+                        </li>
+                        {% endfor %}
                     </ul>
                 </li>
                 </li>
@@ -54,7 +52,7 @@
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="#">Профіль</a></li>
+                    <li><a class="dropdown-item" href="{% url 'admin:index' %}">Профіль</a></li>
                     <li><a class="dropdown-item" href="#">Налаштування</a></li>
                     <li><a class="dropdown-item" href="#">Корзина</a></li>
                     <hr class="dropdown-divider">
