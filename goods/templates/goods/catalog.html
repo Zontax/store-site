@@ -4,250 +4,244 @@
 
 {% block content %}
 
-<div class="container">
-    <!-- Каталог і корзина з фоксованим положенням -->
-    <div class="row mt-1 position-fixed z-3">
-        <!-- Корзина, викликає модальне вікно -->
-        <div>
-            <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton" aria-expanded="false">
-                <i class="bi bi-cart me-2"></i>
-                <span>0</span>
-            </button>
-        </div>
-        <!-- Модальне вікно корзини -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h3 class="text-center mb-4">Корзина</h3>
-                        <div class="container" id="cart-items-container">
-                            <!-- Разметка корзины -->
-                            <div class="card mb-3 text-bg-light shadow-lg">
-                                <div class="card-header">
-                                    <h5 class="card-title">Товар</h5>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <div class="row text-center">
-                                            <div class="col p-0">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-dark btn-sm decrement"
-                                                            data-cart-id="" data-cart-change-url="">
-                                                            -
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" class="form-control number" value="1" readonly />
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-dark btn-sm increment"
-                                                            data-cart-id="" data-cart-change-url="">
-                                                            +
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col p-0">
-                                                <p>x 100.00 =</p>
-                                            </div>
-                                            <div class="col p-0">
-                                                <strong>100.00 $</strong>
-                                            </div>
-                                            <div class="col p-0">
-                                                <a href="#" class="remove-from-cart" data-cart-id="">
-                                                    <i class="bi bi-cart"></i>
-                                                </a>
+<!-- Каталог і корзина з фоксованим положенням -->
+<div class="row mt-1 position-fixed z-3">
+    <!-- Корзина, викликає модальне вікно -->
+    <div>
+        <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton" aria-expanded="false">
+            <i class="bi bi-cart me-2"></i>
+            <span>0</span>
+        </button>
+    </div>
+    <!-- Модальне вікно корзини -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-center mb-4">Корзина</h3>
+                    <div class="container" id="cart-items-container">
+                        <!-- Разметка корзины -->
+                        <div class="card mb-3 text-bg-light shadow-lg">
+                            <div class="card-header">
+                                <h5 class="card-title">Товар</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row text-center">
+                                        <div class="col p-0">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark btn-sm decrement"
+                                                        data-cart-id="" data-cart-change-url="">
+                                                        -
+                                                    </button>
+                                                </span>
+                                                <input type="text" class="form-control number" value="1" readonly />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark btn-sm increment"
+                                                        data-cart-id="" data-cart-change-url="">
+                                                        +
+                                                    </button>
+                                                </span>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card mb-3 shadow-lg">
-                                <div class="card-footer">
-                                    <p class="float-left">
-                                        Разом <strong>1</strong> товар(и) на суму
-                                    </p>
-                                    <h4 class="float-left"><strong>100.00 $</strong></h4>
-                                </div>
+                                        <div class="col p-0">
+                                            <p>x 100.00 =</p>
+                                        </div>
+                                        <div class="col p-0">
+                                            <strong>100.00 $</strong>
+                                        </div>
+                                        <div class="col p-0">
+                                            <a href="#" class="remove-from-cart" data-cart-id="">
+                                                <i class="bi bi-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card mb-3 shadow-lg">
+                            <div class="card-footer">
+                                <p class="float-left">
+                                    Разом <strong>1</strong> товар(и) на суму
+                                </p>
+                                <h4 class="float-left"><strong>100.00 $</strong></h4>
                             </div>
                         </div>
-                        <a class="btn btn-dark" href="../orders/create_order.html">
-                            Оформити замовлення
-                        </a>
                     </div>
+                    <a class="btn btn-dark" href="../orders/create_order.html">
+                        Оформити замовлення
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Контент -->
-<div class="container">
-    <div class="row mt-1">
+<div class="row mt-1">
 
-        <div class="col-lg-2">
+    <div class="col-lg-2">
 
-        </div>
+    </div>
 
-        <div class="col-lg-10">
-            <div class="row">
+    <div class="col-lg-10">
+        <div class="row">
 
-                <!-- Форма фільтрів -->
-                <div class="dropdown mb-2">
-                    <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">Фільтри</button>
+            <!-- Форма фільтрів -->
+            <div class="dropdown mb-2">
+                <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">Фільтри</button>
 
-                    <form action="{% if request.GET.q %}{% url 'catalog:search' %}{% else %}{% url 'catalog:index' slug_url %}{% endif %}" 
-                        method="GET" class="dropdown-menu bg-dark" data-bs-theme="dark">
+                <form action="{% if request.GET.q %}{% url 'catalog:search' %}{% else %}{% url 'catalog:index' slug_url %}{% endif %}" 
+                    method="GET" class="dropdown-menu bg-dark" data-bs-theme="dark">
 
-                        <div class="form-check text-white mx-3">
-                            <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on" 
-                            {% if request.GET.on_sale %} checked {% endif %} />
-                            {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}" />{% endif %}
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Товари по акції
-                            </label>
-                        </div>
+                    <div class="form-check text-white mx-3">
+                        <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on" 
+                        {% if request.GET.on_sale %} checked {% endif %} />
+                        {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}" />{% endif %}
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Товари по акції
+                        </label>
+                    </div>
 
-                        <p class="text-white mx-3 mt-3">Сортувати:</p>
-                        <div class="form-check text-white mx-3">
-                            <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default" 
-                            {% if not request.GET.order_by or request.GET.order_by == 'default' %} checked {% endif %} />
+                    <p class="text-white mx-3 mt-3">Сортувати:</p>
+                    <div class="form-check text-white mx-3">
+                        <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default" 
+                        {% if not request.GET.order_by or request.GET.order_by == 'default' %} checked {% endif %} />
 
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                За замовчуванням
-                            </label>
-                        </div>
-                        <div class="form-check text-white mx-3">
-                            <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="price" 
-                            {% if request.GET.order_by == 'sell_price' %} checked {% endif %} />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            За замовчуванням
+                        </label>
+                    </div>
+                    <div class="form-check text-white mx-3">
+                        <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="price" 
+                        {% if request.GET.order_by == 'sell_price' %} checked {% endif %} />
 
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Від дешевих до дорогих
-                            </label>
-                        </div>
-                        <div class="form-check text-white mx-3">
-                            <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-price" 
-                            {% if request.GET.order_by == '-price' %} checked {% endif %} />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Від дешевих до дорогих
+                        </label>
+                    </div>
+                    <div class="form-check text-white mx-3">
+                        <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-price" 
+                        {% if request.GET.order_by == '-price' %} checked {% endif %} />
 
-                            <label class="form-check-label" for="flexRadioDefault3">
-                                Від дорогих до дешевих
-                            </label>
-                        </div>
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Від дорогих до дешевих
+                        </label>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary mx-3 mt-3">Застосувати</button>
+                    <button type="submit" class="btn btn-primary mx-3 mt-3">Застосувати</button>
 
-                    </form>
-                </div>
+                </form>
+            </div>
 
-                <!-- Якщо не знайдено -->
+            <!-- Якщо не знайдено -->
 
-                {% if request.GET.q %}
-                    {% if goods %}
-                        <h2 class="mt-4">Результати пошуку по запиту <b>{{ request.GET.q }}</b></h2>
-                    {% else %}
-                        <h2 class="mt-4">За запитом <b>{{ request.GET.q }}</b> нічого не знайдено</h2>
+            {% if request.GET.q %}
+                {% if goods %}
+                    <h2 class="mt-4">Результати пошуку по запиту <b>{{ request.GET.q }}</b></h2>
+                {% else %}
+                    <h2 class="mt-4">За запитом <b>{{ request.GET.q }}</b> нічого не знайдено</h2>
 
-                        <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
-                    {% endif %}          
-                {% endif %}
+                    <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+                {% endif %}          
+            {% endif %}
 
-                <!-- Товари -->
-                {% for product in goods %}
-                <div class="col-lg-4 col-md-6 p-4">
-                    <div class="card border-primary rounded custom-shadow">
+            <!-- Товари -->
+            {% for product in goods %}
+            <div class="col-lg-4 col-md-6 p-4">
+                <div class="card border-primary rounded custom-shadow">
+                    <a href="{% url 'catalog:product' product.slug %}">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" />
+                        {% else %}
+                            <img src="{% static 'images/Not found image.png' %}" class="card-img-top" alt="{{ product.name }}" />
+                        {% endif %}
+                    </a>
+
+                    <div class="card-body">
                         <a href="{% url 'catalog:product' product.slug %}">
-                            {% if product.image %}
-                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" />
-                            {% else %}
-                                <img src="{% static 'images/Not found image.png' %}" class="card-img-top" alt="{{ product.name }}" />
-                            {% endif %}
-                        </a>
+                            <p class="card-title">
 
-                        <div class="card-body">
-                            <a href="{% url 'catalog:product' product.slug %}">
-                                <p class="card-title">
-
-                                    {% autoescape off %}
-                                        {% if product.headline %}
-                                            {{ product.headline }}
-                                        {% else %}
-                                            {{ product.name }}
-                                        {% endif %}
-                                    {% endautoescape %}
-
-                                </p>
-                            </a>
-                            <p class="card-text">
-
-                                {% autoescape off %} 
-                                    {% if product.bodyline %}
-                                        {{ product.bodyline|truncatechars:150 }}
+                                {% autoescape off %}
+                                    {% if product.headline %}
+                                        {{ product.headline }}
                                     {% else %}
-                                        {{ product.description|truncatechars:42 }}
+                                        {{ product.name }}
                                     {% endif %}
                                 {% endautoescape %}
 
                             </p>
-                            <p class="product_id">id: {{ product.display_id }}</p>
-                            <div class="d-flex justify-content-between">
-                                {% if product.discount %}
-                                    <p><s>{{ product.price|floatformat:'0' }}</s> Грн</p>
-                                    <p>
-                                        <strong>{{ product.sell_price|floatformat:'0' }}</strong>
-                                        Грн
-                                    </p>
-                                    <span class="badge bg-warning text-dark">Знижка {{ product.discount }}%</span>
-                                {% else %}
-                                    <p><strong>{{ product.price|floatformat:'0' }}</strong> Грн</p>
-                                {% endif %}
+                        </a>
+                        <p class="card-text">
 
-                                <a href="#" class="btn add-to-cart">
-                                    <i class="bi bi-cart"></i>
-                                </a>
-                            </div>
+                            {% autoescape off %} 
+                                {% if product.bodyline %}
+                                    {{ product.bodyline|truncatechars:150 }}
+                                {% else %}
+                                    {{ product.description|truncatechars:42 }}
+                                {% endif %}
+                            {% endautoescape %}
+
+                        </p>
+                        <p class="product_id">id: {{ product.display_id }}</p>
+                        <div class="d-flex justify-content-between">
+                            {% if product.discount %}
+                                <p><s>{{ product.price|floatformat:'0' }}</s> Грн</p>
+                                <p>
+                                    <strong>{{ product.sell_price|floatformat:'0' }}</strong>
+                                    Грн
+                                </p>
+                                <span class="badge bg-warning text-dark">Знижка {{ product.discount }}%</span>
+                            {% else %}
+                                <p><strong>{{ product.price|floatformat:'0' }}</strong> Грн</p>
+                            {% endif %}
+
+                            <a href="#" class="btn add-to-cart">
+                                <i class="bi bi-cart"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
+        </div>
 
-            <!-- Пагінація -->
-            {% if goods %}
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center my-4">
-                    <div class="custom-shadow d-flex">
-                        <li class="page-item {% if not goods.has_previous %} disabled {% endif %}">
+        <!-- Пагінація -->
+        {% if goods %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center my-4">
+                <div class="custom-shadow d-flex">
+                    <li class="page-item {% if not goods.has_previous %} disabled {% endif %}">
+                        <a class="page-link"
+                            href="{% if goods.has_previous %}?{% change_params page=goods.previous_page_number %}{% else %} # {% endif %}">
+                            Назад
+                        </a>
+                    </li>
+
+                    {% for page in goods.paginator.page_range %}
+                    {% if page >= goods.number|add:-2 and page <= goods.number|add:2 %}
+                        <li class="page-item {% if goods.number == page %} active {% endif %}">
+                            <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+
+                        <li class="page-item {% if not goods.has_next %} disabled {% endif %}">
                             <a class="page-link"
-                                href="{% if goods.has_previous %}?{% change_params page=goods.previous_page_number %}{% else %} # {% endif %}">
-                                Назад
+                                href="{% if goods.has_next %}?{% change_params page=goods.next_page_number %}{% else %} # {% endif %}">
+                                Вперед
                             </a>
                         </li>
-
-                        {% for page in goods.paginator.page_range %}
-                        {% if page >= goods.number|add:-2 and page <= goods.number|add:2 %}
-                            <li class="page-item {% if goods.number == page %} active {% endif %}">
-                                <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
-                            </li>
-                        {% endif %}
-                        {% endfor %}
-
-                            <li class="page-item {% if not goods.has_next %} disabled {% endif %}">
-                                <a class="page-link"
-                                    href="{% if goods.has_next %}?{% change_params page=goods.next_page_number %}{% else %} # {% endif %}">
-                                    Вперед
-                                </a>
-                            </li>
-                    </div>
-                </ul>
-            </nav>
-            {% endif %}
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+                </div>
+            </ul>
+        </nav>
+        {% endif %}
+        
     </div>
 </div>
 

@@ -69,7 +69,15 @@
     </header>
 
     <main>
-        {% block content %}{% endblock %}
+        <div class="container">
+            <div class="row mt1">
+            </div>
+            
+            <div class="col-lg-10">
+                {% include '_notifications.html' %}
+                {% block content %}{% endblock %} 
+            </div>
+        </div>
     </main>
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-white">
