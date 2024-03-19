@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
-from users.models import User
 
 
 def login(request):
