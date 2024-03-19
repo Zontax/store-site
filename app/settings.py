@@ -125,6 +125,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Реструєм модель користувачів
 AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = '/user/login/'
 
 # Товарів на сторінці
 GOODS_IN_PAGE = 6

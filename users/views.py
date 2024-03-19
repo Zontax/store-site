@@ -19,6 +19,10 @@ def login(request):
                 auth.login(request, user)
                 messages.success(request, f'{request.user.username}, Ви успішно увійшли в акаунт')
                 
+                next_url = request.POST.get('next')
+                if next_url:  # редірект на бажану сторінку після входу
+                    return redirect(next_url)
+                    
                 return redirect(reverse('main:index'))
     else:
         form = UserLoginForm()

@@ -15,6 +15,11 @@
 
                 <form action="{% url 'user:login' %}" method="POST">
                     {% csrf_token %}
+                    
+                    {% if request.GET.next %}
+                        <input type="hidden" name="text" value="{{ request.GET.next }}">
+                    {% endif %}
+
                     {% if form.non_field_errors %}
                         <p>{{ form.non_field_errors }}</p>
                     {% endif %}
@@ -31,7 +36,7 @@
 
                     <div class="mb-3">
                         <label for="id_password" class="form-label">{{ form.password.label }}</label>
-                        <input type="text" class="form-control" 
+                        <input type="password" class="form-control" 
                             id="id_password"
                             name="password"
                             placeholder="Введіть ваш пароль" 

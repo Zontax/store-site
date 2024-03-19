@@ -72,9 +72,12 @@
                             </a></li>
                         </ul>
                     </li>
-                    <a href="{% url 'user:profile' %}" aria-expanded="false">
-                        <img src="{{ user.avatar_image.url }}" alt="avatar" width="28" height="28" class="rounded-circle">
-                    </a>
+                    
+                    {% if user.avatar_image %}
+                        <a href="{% url 'user:profile' %}" aria-expanded="false">
+                            <img src="{{ user.avatar_image.url }}" alt="avatar" width="28" height="28" class="rounded-circle">
+                        </a>
+                    {% endif %}
                 {% endif %}
             </ul>
 
@@ -87,7 +90,9 @@
                 <div class="dropdown text-end">
                     <a href="" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ user.avatar_image.url }}" alt="avatar" width="32" height="32" class="rounded-circle">
+                        {% if user.avatar_image %}
+                            <img src="{{ user.avatar_image.url }}" alt="avatar" width="32" height="32" class="rounded-circle">
+                        {% endif %}
                     </a>
                     <ul class="dropdown-menu text-small">
                         <li><a class="dropdown-item" href="{% url 'user:profile' %}">Профіль</a></li>
