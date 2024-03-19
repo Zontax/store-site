@@ -42,8 +42,9 @@
                 <li><a href="{% url 'main:about' %}" class="nav-link px-2 link-body-emphasis">Про нас</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control" placeholder="Пошук..." aria-label="Search">
+            <form class="d-flex" role="search" action="{% url 'catalog:search' %}" method="GET">
+                <input type="search" class="form-control me-1" name="q" placeholder="Пошук..." aria-label="Search">
+                <button class="btn btn-outline-success text-white me-3">Пошук</button>
             </form>
 
             <div class="dropdown text-end">
