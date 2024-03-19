@@ -12,4 +12,7 @@ class User(AbstractUser):
         ordering = ('id',)
         
     def __str__(self):
-        return f'{self.username}'
+        is_admin: str = ''
+        if self.is_superuser:
+            is_admin = '- ADMIN'
+        return f'{self.first_name} {self.last_name} ({self.username}) {is_admin}'
