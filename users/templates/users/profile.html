@@ -96,56 +96,12 @@
             <!-- Корзина -->
             <div class="col-md-7">
                 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
-                    <h3 class="text-center mb-4">Корзина</h3>
+                    <h3 class="text-center mb-4">Кошик</h3>
                     <div class="container" id="cart-items-container">
-                        <!-- Розмітка коризини -->
-                        <div class="card mb-3 text-bg-light shadow-lg">
-                            <div class="card-header">
-                                <h5 class="card-title">Товар</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="row text-center">
-                                        <div class="col p-0">
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark btn-sm decrement"
-                                                        data-cart-id="" data-cart-change-url="">-</button>
-                                                </span>
-                                                <input type="text" class="form-control number" value="1"
-                                                    readonly>
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark btn-sm increment"
-                                                        data-cart-id="" data-cart-change-url="">+</button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col p-0">
-                                            <p>x 100.00 = </p>
-                                        </div>
-                                        <div class="col p-0"><strong>100.00 $</strong></div>
-                                        <div class="col p-0">
-                                            <a href="#" class="remove-from-cart" data-cart-id="">
-                                                <img class="mx-1" src="{% static 'images/icons/trash3-fill.svg' %}"
-                                                    alt="Catalog Icon" width="16" height="16">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Кінець розмітки корзини-->
-
-                        <div class="card mb-3 shadow-lg">
-                            <div class="card-footer">
-                                <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
-                                <h4 class="float-left"><strong>100.00 $</strong></h4>
-                            </div>
-                        </div>
-                        <!-- Кінець корзини-->
+                        {% include 'carts/_included_cart.html' %} <!-- Розмітка коризини -->
                     </div>
                     <a class="btn btn-dark" href="../orders/create_order.html">
-                        Оформить заказ
+                        Оформити замовлення
                     </a>
                 </div>
             </div>
@@ -153,14 +109,14 @@
             <!-- Замовлення -->
             <div class="col-md-12">
                 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
-                    <h3 class="text-center mb-4">Мои заказы</h3>
+                    <h3 class="text-center mb-4">Мої замовлення</h3>
                     <!-- Размітка замовлень -->
                     <div class="container">
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading1">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                        Заказ № 256 - 09 сентября 2023 9:04 | Статус:<strong class="mx-2"> В обработке</strong>
+                                        Замовлення № 256 - 09 вересня 2023 9:04 | Статус:<strong class="mx-2"> В обробці</strong>
                                     </button>
                                 </h2>
                                 <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionExample">
@@ -169,9 +125,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>Товар</th>
-                                                    <th>Количество</th>
-                                                    <th>Цена</th>
-                                                    <th>Общая стоимость</th>
+                                                    <th>Кількість</th>
+                                                    <th>Ціна</th>
+                                                    <th>Загальна сума</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -180,12 +136,11 @@
                                                     <td>1</td>
                                                     <td>255.00 $</td>
                                                     <td>255.00 $</td>
-                                                    
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div class="d-flex justify-content-between">
-                                            <p><strong>Итого:</strong></p>
+                                            <p><strong>Всього:</strong></p>
                                             <p><strong>255.00 $</strong></p>
 
                                         </div>
@@ -195,7 +150,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading2">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                        Заказ № 248 - 01 августа 2023 11:28 | Статус: <strong>Получен</strong>
+                                        Заказ № 248 - 01 августа 2023 11:28 | Статус: <strong>Отримано</strong>
                                     </button>
                                 </h2>
                                 <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
@@ -204,9 +159,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>Товар</th>
-                                                    <th>Количество</th>
-                                                    <th>Цена</th>
-                                                    <th>Общая стоимость</th>
+                                                    <th>Кількість</th>
+                                                    <th>Ціна</th>
+                                                    <th>Загальна сума</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -215,7 +170,6 @@
                                                     <td>2</td>
                                                     <td>30.00 $</td>
                                                     <td>60.00 $</td>
-                                                    
                                                 </tr>
                                             </tbody>
                                         </table>
