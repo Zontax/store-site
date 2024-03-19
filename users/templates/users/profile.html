@@ -12,7 +12,7 @@
                     <form>
                         <div class="row">
                             <div class="col-md-12 mb-3 text-center">
-                                <img src="../deps/images/baseavatar.jpg"
+                                <img src="{% static 'images/baseavatar.jpg' %}"
                                     alt="Аватар користувача" class="img-fluid rounded-circle"
                                     style="max-width: 150px;">
                                 <input type="file" class="form-control mt-3" id="avatar"
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <!-- Корзина -->
-            <div class="col-md-7">
+            {% comment %} <div class="col-md-7">
                 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
                     <h3 class="text-center mb-4">Корзина</h3>
                     <div class="container" id="cart-items-container">
@@ -77,7 +77,7 @@
                                         <div class="col p-0"><strong>100.00 $</strong></div>
                                         <div class="col p-0">
                                             <a href="#" class="remove-from-cart" data-cart-id="">
-                                                <img class="mx-1" src="../deps/icons/trash3-fill.svg"
+                                                <img class="mx-1" src="{% static 'images/icons/trash3-fill.svg' %}"
                                                     alt="Catalog Icon" width="16" height="16">
                                             </a>
                                         </div>
@@ -85,6 +85,8 @@
                                 </li>
                             </ul>
                         </div>
+                        <!-- Кінець розмітки корзини-->
+
                         <div class="card mb-3 shadow-lg">
                             <div class="card-footer">
                                 <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
@@ -97,7 +99,7 @@
                         Оформить заказ
                     </a>
                 </div>
-            </div>
+            </div> {% endcomment %}
 
             <!-- Замовлення -->
             <div class="col-md-12">

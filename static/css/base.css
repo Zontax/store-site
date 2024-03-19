@@ -27,6 +27,18 @@ a:active {
     color: rgb(81, 81, 81);
 }
 
+a.dark {
+    color: rgb(40, 40, 40);
+}
+
+a.dark:hover {
+    color: rgb(81, 81, 81);
+}
+
+a.dark:active {
+    color: rgb(147, 147, 147);
+}
+
 .nav-link.dropdown-toggle {
     color: rgb(223, 223, 223);
 }
