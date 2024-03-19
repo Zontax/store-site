@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    <h3 class="text-center mb-4">Кошик</h3>
+    <div class="container" id="cart-items-container">
+        {% include 'carts/_included_cart.html' %}    
+    </div>
+    <a class="btn btn-dark" href="orders/create_order.html">
+        Оформити замовлення
+    </a>
+
+{% endblock %}

@@ -130,3 +130,6 @@ LOGIN_URL = '/user/login/'
 
 # Товарів на сторінці
 GOODS_IN_PAGE = 6
+
+# Назва сайту
+SITE_NAME = 'Магазин меблів'

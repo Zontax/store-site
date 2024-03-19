@@ -4,8 +4,7 @@ from django.shortcuts import render
 
 def index(request):
     context = {
-        'title': 'Головна',
-        'content': 'Шаблон (Django 4.2.11)',
+        'content': 'Шаблон "Магазина Меблів" (Django 4.2.11)',
         'description': '',
         'list': ['first', 'second'],
         'dict': { 'first': 1, 'second': 2},
