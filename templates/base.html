@@ -53,7 +53,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item text-white" href="{% url 'user:profile' %}">
-                                Профіль ({{ user.username }})
+                                Особистий кабінет ({{ user.first_name }})
                             </a></li>
 
                             {% if user.is_superuser %}
@@ -72,6 +72,9 @@
                             </a></li>
                         </ul>
                     </li>
+                    <a href="{% url 'user:profile' %}" aria-expanded="false">
+                        <img src="{{ user.avatar_image.url }}" alt="avatar" width="28" height="28" class="rounded-circle">
+                    </a>
                 {% endif %}
             </ul>
 
@@ -82,9 +85,9 @@
 
             {% if user.is_authenticated %}
                 <div class="dropdown text-end">
-                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                    <a href="" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        <img src="{{ user.avatar_image.url }}" alt="avatar" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small">
                         <li><a class="dropdown-item" href="{% url 'user:profile' %}">Профіль</a></li>
@@ -134,6 +137,8 @@
     <script src="{% static 'lib/jquery-validation/dist/jquery.validate.min.js' %}"></script>
     <script src="{% static 'lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ajax.js' %}"></script>
+    <script src="{% static 'js/jquery-events.js' %}"></script>
 </body>
 
 </html>

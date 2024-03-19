@@ -1,5 +1,5 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.forms import ModelForm, CharField, TextInput, PasswordInput, EmailField
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.forms import ImageField, CharField, ModelForm, TextInput, PasswordInput, EmailField
 from users.models import User
 
 
@@ -25,34 +25,27 @@ class UserRegisterForm(UserCreationForm):
         )
         
     first_name = CharField()
-    last_name = CharField()
+    last_name = CharField(required=False)
     username = CharField(label="Ім'я користувача")
-    email = EmailField()
+    email = EmailField(label="Пошта")
     password1 = CharField(label='Пароль')
     password2 = CharField(label='Повторити пароль')
     
     
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    # username = CharField(
-    #     label="Ім'я користувача",
-    #     widget=TextInput(attrs={"autofocus": True,
-    #                                              'class': 'form-control',
-    #                                              'placeholder': "Введіть ваше ім'я користувача"}))
+class UserProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = (
+            'avatar_image',
+            'first_name', 
+            'last_name', 
+            'username', 
+            'email',
+        )
     
-    # password = CharField(
-    #     label="Пароль",
-    #     widget=PasswordInput(attrs={"autocomplete": "current-password",
-    #                                                  'class': 'form-control',
-    #                                                  'placeholder': "Введіть ваш пароль"}),
-    # )
+    avatar_image = ImageField(required=False)
+    first_name = CharField()
+    last_name = CharField(required=False)
+    username = CharField()
+    email = EmailField()
+    
