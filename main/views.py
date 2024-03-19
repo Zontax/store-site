@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, redirect
 
 
 def index(request):
@@ -11,6 +12,7 @@ def index(request):
         'bool': True,
     }
     
+    return redirect(reverse('catalog:index', kwargs={'category_slug': 'all'}))
     return render(request, 'main/index.html', context)
 
 
