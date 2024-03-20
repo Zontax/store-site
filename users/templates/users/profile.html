@@ -108,9 +108,11 @@
                     <div class="container" id="cart-items-container">
                         {% include 'carts/_included_cart.html' %} <!-- Розмітка коризини -->
                     </div>
-                    <a class="btn btn-dark" href="../orders/create_order.html">
-                        Оформити замовлення
-                    </a>
+                    {% if carts %}
+                        <a class="btn btn-dark" href="{% url 'user:profile' %}">
+                            Оформити замовлення
+                        </a>
+                    {% endif %}
                 </div>
             </div>
 
