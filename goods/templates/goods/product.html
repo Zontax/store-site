@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
@@ -123,7 +127,7 @@
                         <p class="card-text">Ціна: <strong>{{ product.sell_price|floatformat:'0' }}</strong> Грн</p>
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
-                        <a href="#" class="btn btn-dark add-to-cart">Додати в корзину</a>
+                        <a href="{% url 'cart:cart_add' product.slug %}" class="btn btn-dark add-to-cart">Додати в корзину</a>
                     </div>
                 </div>
             </div>
