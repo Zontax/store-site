@@ -6,14 +6,14 @@ from goods.models import Product
 
 class CartQuerySet(QuerySet):
     
-    def total_price(self):
-        return sum(cart.products_price for cart in self)
-    
-    
     def total_quantity(self):
         if self:
             return sum(cart.quantity for cart in self)
-        return 0 
+        return 0
+    
+    
+    def total_price(self):
+        return sum(cart.products_price() for cart in self)
 
 
 class Cart(Model):
@@ -34,6 +34,5 @@ class Cart(Model):
         return f'Кошик {self.user.username} | Товар {self.product.name} | Кількість {self.quantity}'
     
     
-    def products_price(self):
-        
+    def products_price(self):  
         return round(self.product.sell_price() * self.quantity, 2)

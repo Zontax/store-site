@@ -25,9 +25,12 @@ def cart_add(request: HttpRequest, product_slug):
     return redirect(request.META['HTTP_REFERER'])
 
 
-def cart_change(request, product_slug):
+def cart_change(request: HttpRequest, product_slug):
     return render(request, 'carts/cart.html')
 
 
-def cart_remove(request, product_slug):
-    return render(request, 'carts/cart.html')
+def cart_remove(request: HttpRequest, cart_id):
+    cart = Cart.objects.get(id=cart_id)
+    cart.delete()
+    
+    return redirect(request.META['HTTP_REFERER'])

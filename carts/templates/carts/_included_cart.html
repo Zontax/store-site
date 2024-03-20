@@ -1,14 +1,14 @@
 {% load static %}
-{% load carts_tags %} 
-
-{% user_carts request as carts %}{% comment %} отримуєм всі корзини користувача {% endcomment %}
 
 <div class="card mb-3 text-bg-light shadow-lg">
     {% for cart in carts %}
 
         <div class="card-header">
-            <h5 class="card-title">Товар</h5>
+            <h5 class="card-title">{{ cart.product.name }}</h5>
         </div>
+
+        
+
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <div class="row text-center">
@@ -16,22 +16,30 @@
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
-                                    data-cart-id="" data-cart-change-url="">-</button>
+                                    data-cart-id="{{ card.id }}" data-cart-change-url="">-</button>
                             </span>
-                            <input type="text" class="form-control number" value="1"
+                            <input type="text" class="form-control number" value="{{ cart.quantity }}"
                                 readonly>
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-dark btn-sm increment"
-                                    data-cart-id="" data-cart-change-url="">+</button>
+                                <button type="button" class="btn btn-dark btn-sm increment me-5"
+                                    data-cart-id="{{ card.id }}" data-cart-change-url="">+</button>
                             </span>
                         </div>
                     </div>
                     <div class="col p-0">
-                        <p>x 100.00 = </p>
+                        <p>x {{ cart.product.sell_price }} = </p>
                     </div>
-                    <div class="col p-0"><strong>100.00 $</strong></div>
+
                     <div class="col p-0">
-                        <a href="{% url 'cart:cart_remove' 1 %}" class="remove-from-cart" data-cart-id="">
+                        <strong>{{ cart.products_price }} Грн</strong>
+                    </div>
+
+                    <div class="col p-0">
+                        {% if cart.product.image.url %}
+                                <img src="{{ cart.product.image.url }}" alt="avatar" width="36" height="36" class="rounded-circle me-1">
+                            {% endif %}
+
+                        <a href="{% url 'cart:cart_remove' cart.id %}" class="remove-from-cart" data-cart-id="{{ cart.product.slug }}">
                             <img class="mx-1" src="{% static 'images/icons/trash3-fill.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>
@@ -45,7 +53,9 @@
     
 <div class="card mb-3 shadow-lg">
     <div class="card-footer">
-        <p class="float-left">Всього <strong>1</strong> товар(а) на суму</p>
-        <h4 class="float-left"><strong>100.00 $</strong></h4>
+
+        <p class="float-left">Всього <strong>{{ carts.total_quantity }}</strong> товар(а) на суму</p>
+        <h4 class="float-left"><strong>{{ carts.total_price }} Грн</strong></h4> 
+
     </div>
 </div>
