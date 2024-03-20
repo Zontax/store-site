@@ -12,12 +12,14 @@
                 <div class="row text-center">
                     <div class="col p-0">
                         <div class="input-group">
+
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
                                     data-cart-id="{{ card.id }}" data-cart-change-url="">-</button>
                             </span>
-                            <input type="text" class="form-control number" value="{{ cart.quantity }}"
-                                readonly>
+
+                            <input type="text" class="form-control number" value="{{ cart.quantity }}" readonly>
+
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm increment me-5"
                                     data-cart-id="{{ card.id }}" data-cart-change-url="">+</button>
@@ -37,8 +39,9 @@
                                 <img src="{{ cart.product.image.url }}" alt="avatar" width="36" height="36" class="rounded-circle me-1">
                             {% endif %}
 
-                        <a href="{% url 'cart:cart_remove' cart.id %}" class="remove-from-cart" data-cart-id="{{ cart.product.slug }}">
-                            <img class="mx-1" src="{% static 'images/icons/trash3-fill.svg' %}"
+                        <a href="{% url 'cart:cart_remove' %}" class="remove-from-cart" data-cart-id="{{ cart.product.slug }}">
+                            <img class="mx-1" 
+                                src="{% static 'images/icons/trash3-fill.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>
                     </div>
