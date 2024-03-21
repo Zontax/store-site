@@ -119,7 +119,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 INTERNAL_IPS = [
     "127.0.0.1",
-    # ...
+    os.getenv('INTERNAL_IPS_0'),
+    os.getenv('INTERNAL_IPS_1'),
+    os.getenv('INTERNAL_IPS_2'),
+    os.getenv('INTERNAL_IPS_3'),
+    os.getenv('INTERNAL_IPS_4'),
+    os.getenv('INTERNAL_IPS_5'),
 ]
 
 # Default primary key field type

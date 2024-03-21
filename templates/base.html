@@ -10,7 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-    {% block css %}{% endblock %}
+    {% block css %}
+    {% endblock %}
 
     {% block title %}
         <title>
@@ -154,7 +155,7 @@
     </footer>
 
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
-    <script src="{% static 'lib/jquery-validation/dist/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'lib\jquery-validation\dist\jquery.validate.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/jquery-ajax.js' %}"></script>
 </body>

@@ -15,21 +15,24 @@
 
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
-                                    data-cart-id="{{ cart.id }}" 
-                                    data-cart-change-url="{% url 'cart:cart_change' %}">
+                                    data-cart-id="{{ cart.id }}"
+                                    data-cart-change-url="{% url "cart:cart_change" %}">
                                     {% csrf_token %}
                                     -</button>
                             </span>
-
-                            <input type="text" class="form-control number" value="{{ cart.quantity }}" readonly>
+                            
+                            <input type="text" class="form-control number" 
+                                value="{{ cart.quantity }}"
+                                readonly>
 
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-dark btn-sm increment me-5"
-                                    data-cart-id="{{ cart.id }}" 
-                                    data-cart-change-url="{% url 'cart:cart_change' %}">
+                                <button type="button" class="btn btn-dark btn-sm increment"
+                                    data-cart-id="{{ cart.id }}"
+                                    data-cart-change-url="{% url "cart:cart_change" %}">
                                     {% csrf_token %}
                                     +</button>
                             </span>
+
                         </div>
                     </div>
                     <div class="col p-0">
