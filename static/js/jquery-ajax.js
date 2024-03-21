@@ -32,7 +32,7 @@ $(document).ready(function () {
                 // Через 7 сек прибираєм сповіщення
                 setTimeout(function () {
                     successMessage.fadeOut(400)
-                }, 4000)
+                }, 3500)
 
                 // Увеличиваем количество товаров в корзине (отрисовка в шаблоне)
                 cartCount++
@@ -74,11 +74,11 @@ $(document).ready(function () {
             success: function (data) {
                 // Сообщение
                 successMessage.html(data.message)
-                successMessage.fadeIn(400)
+                successMessage.fadeIn(250)
                 // Через 7сек убираем сообщение
                 setTimeout(function () {
-                    successMessage.fadeOut(400)
-                }, 7000)
+                    successMessage.fadeOut(250)
+                }, 3500)
 
                 // Уменьшаем количество товаров в корзине (отрисовка)
                 cartCount -= data.quantity_deleted
@@ -90,7 +90,7 @@ $(document).ready(function () {
             },
 
             error: function (data) {
-                console.log('Ошибка при добавлении товара в корзину')
+                console.log('Помилка при видалені товара з кошика')
             },
         })
     })
@@ -146,11 +146,11 @@ $(document).ready(function () {
             success: function (data) {
                 // Сповіщення
                 successMessage.html(data.message)
-                successMessage.fadeIn(400)
+                successMessage.fadeIn(250)
                 // Через 7сек прибираєм сповіщення
                 setTimeout(function () {
-                    successMessage.fadeOut(400)
-                }, 7000)
+                    successMessage.fadeOut(250)
+                }, 3500)
 
                 // Змінюєм кількість товарів в корзині
                 var goodsInCartCount = $('#goods-in-cart-count')
@@ -163,12 +163,13 @@ $(document).ready(function () {
                 cartItemsContainer.html(data.cart_items_html)
             },
             error: function (data) {
-                console.log('Ошибка при добавлении товара в корзину')
+                console.log('Помилка при зміні кількості товара в кошику')
             },
         })
     }
 
-    var notification = $('#notification') // елемент по id - сповіщення від django
+    // Елемент по id - сповіщення від django
+    var notification = $('#notification')
 
     if (notification.length > 0) {
         // І через 7 сек. прибираєм

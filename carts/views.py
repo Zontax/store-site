@@ -1,14 +1,13 @@
-from statistics import quantiles
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.contrib import auth, messages
 from django.template.loader import render_to_string
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from carts.utilitis import get_user_carts
 from goods.models import Product
 from carts.models import Cart
-
+# API для кошика
 
 def cart_add(request: HttpRequest):
     product_id = request.POST.get('product_id')
@@ -37,11 +36,44 @@ def cart_add(request: HttpRequest):
 
 
 def cart_change(request: HttpRequest):
-    return render(request, 'carts/cart.html')
+    cart_id = request.POST.get('cart_id')
+    quantity = request.POST.get('quantity')
+
+    cart = Cart.objects.get(id=cart_id)
+
+    cart.quantity = quantity
+    cart.save()
+    updated_quantity = cart.quantity
+
+    cart = get_user_carts(request)
+    cart_items_html = render_to_string(
+        "carts/_included_cart.html", { "carts": cart }, request=request)
+
+    response_data = {
+        "message": "Кількість змінено",
+        "cart_items_html": cart_items_html,
+        "quantity": updated_quantity,
+    }
+
+    return JsonResponse(response_data)
 
 
 def cart_remove(request: HttpRequest):
-    # cart = Cart.objects.get(id=cart_id)
-    # cart.delete()
     
-    return redirect(request.META['HTTP_REFERER'])
+    cart_id = request.POST.get("cart_id")
+
+    cart = Cart.objects.get(id=cart_id)
+    quantity = cart.quantity
+    cart.delete()
+
+    user_cart = get_user_carts(request)
+    cart_items_html = render_to_string(
+        "carts/_included_cart.html", {"carts": user_cart}, request=request)
+
+    response_data = {
+        "message": "Товар видалено",
+        "cart_items_html": cart_items_html,
+        "quantity_deleted": quantity,
+    }
+
+    return JsonResponse(response_data)

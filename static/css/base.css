@@ -15,6 +15,13 @@ footer {
     background-color: aliceblue;
 }
 
+.notifications-container {
+    position: fixed;
+    top: 48px;
+    right: 20px;
+    z-index: 9999;
+}
+
 a {
     color: rgb(223, 223, 223);
 }

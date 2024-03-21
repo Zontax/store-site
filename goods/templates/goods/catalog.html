@@ -64,8 +64,7 @@
                 </form>
             </div>
 
-            <!-- Якщо не знайдено -->
-
+            <!-- Результати пошуку -->
             {% if request.GET.q %}
                 {% if goods %}
                     <h2 class="mt-4">Результати пошуку по запиту <b>{{ request.GET.q }}</b></h2>
@@ -80,6 +79,7 @@
             {% for product in goods %}
             <div class="col-lg-4 col-md-6 p-4">
                 <div class="card border-primary rounded custom-shadow">
+
                     <a href="{% url 'catalog:product' product.slug %}">
                         {% if product.image %}
                             <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" />
@@ -126,9 +126,11 @@
                                 <p><strong>{{ product.price|floatformat:'0' }}</strong> Грн</p>
                             {% endif %}
 
-                            <a href="{% url 'cart:cart_add' %}" class="btn add-to-cart" data-product-id="{{ product.id }}">
+                            <a href="{% url 'cart:cart_add' %}" class="btn add-to-cart"
+                                data-product-id="{{ product.id }}">
                                 {% csrf_token %}
-                                <i class="bi bi-cart"></i>
+                                <img class="mx-1" src="{% static "images/icons/cart-plus.svg" %}" alt="Catalog Icon" 
+                                    width="32" height="32">
                             </a>
                         </div>
                     </div>

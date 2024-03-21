@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% block css %}{% endblock %}
-    
 
     {% block title %}
         <title>
@@ -31,7 +30,7 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="{% url 'main:index' %}"
                 class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                <img src="{% static 'images/icons/store.svg' %}" alt="Index" width="32" height="32" class="bg-white me-3">
+                <img src="{% static 'favicon.ico' %}" alt="Index" width="32" height="32" class="me-3">
                 <span class="fs-4 me-2">{{ site_name }}</span>
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -62,7 +61,14 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item text-white" href="{% url 'user:profile' %}">
-                                Особистий кабінет ({{ user.first_name }})
+                                Особистий кабінет 
+                                {% if user.first_name %}
+                                    ({{ user.first_name }}{% if user.last_name %} {{ user.last_name }}{% endif %})
+                                {% elif user.last_name %}
+                                    ({{ user.last_name }})
+                                {% else %}
+                                    ({{ user.username }})
+                                {% endif %}
                             </a></li>
 
                             {% if user.is_superuser %}
@@ -116,11 +122,13 @@
 
         <div class="container">
             <div class="row mt1">
-            </div>
-            
-            <div class="col-lg-10">
-                {% include '_notifications.html' %}
-                {% block content %}{% endblock %} 
+                {% comment %} <div class="col-lg-2">
+                </div> {% endcomment %}
+
+                <div class="col-lg-10">
+                    {% include '_notifications.html' %}   
+                    {% block content %}{% endblock %} 
+                </div>
             </div>
         </div>
     </main>

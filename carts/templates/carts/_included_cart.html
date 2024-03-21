@@ -15,33 +15,42 @@
 
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
-                                    data-cart-id="{{ card.id }}" data-cart-change-url="">-</button>
+                                    data-cart-id="{{ cart.id }}" 
+                                    data-cart-change-url="{% url 'cart:cart_change' %}">
+                                    {% csrf_token %}
+                                    -</button>
                             </span>
 
                             <input type="text" class="form-control number" value="{{ cart.quantity }}" readonly>
 
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm increment me-5"
-                                    data-cart-id="{{ card.id }}" data-cart-change-url="">+</button>
+                                    data-cart-id="{{ cart.id }}" 
+                                    data-cart-change-url="{% url 'cart:cart_change' %}">
+                                    {% csrf_token %}
+                                    +</button>
                             </span>
                         </div>
                     </div>
                     <div class="col p-0">
-                        <p>x {{ cart.product.sell_price }} = </p>
+                        <p>x {{ cart.product.sell_price|floatformat:'0' }} = </p>
                     </div>
 
                     <div class="col p-0">
-                        <strong>{{ cart.products_price }} Грн</strong>
+                        <strong>{{ cart.products_price|floatformat:'0' }} Грн</strong>
                     </div>
 
                     <div class="col p-0">
-                        {% if cart.product.image.url %}
-                                <img src="{{ cart.product.image.url }}" alt="avatar" width="36" height="36" class="rounded-circle me-1">
-                            {% endif %}
+                        {% if cart.product.image %}
+                            <img class="rounded-circle me-1" src="{{ cart.product.image.url }}"
+                                alt="Image" width="36" height="36" >
+                        {% endif %}
 
-                        <a href="{% url 'cart:cart_remove' %}" class="remove-from-cart" data-cart-id="{{ cart.product.slug }}">
-                            <img class="mx-1" 
-                                src="{% static 'images/icons/trash3-fill.svg' %}"
+                        <a href="{% url 'cart:cart_remove' %}" class="remove-from-cart" 
+                            data-cart-id="{{ cart.id }}">
+                            {% csrf_token %}
+
+                            <img class="mx-1" src="{% static 'images/icons/trash3-fill.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>
                     </div>
@@ -56,7 +65,7 @@
     <div class="card-footer">
 
         <p class="float-left">Всього <strong>{{ carts.total_quantity }}</strong> товар(а) на суму</p>
-        <h4 class="float-left"><strong>{{ carts.total_price }} Грн</strong></h4> 
+        <h4 class="float-left"><strong>{{ carts.total_price|floatformat:'0' }} Грн</strong></h4> 
 
     </div>
 </div>

@@ -1,19 +1,19 @@
 {% load static %}
-{% load carts_tags %} 
+{% load carts_tags %}
 {% user_carts request as carts %}
 
-<!-- Кнопка кошика -->
 <div>
     <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
         aria-expanded="false">
-        <img class="mx-1 me-2" src="{% static 'images/icons/basket2-fill.svg' %}" 
-            alt="icon" width="24" height="24">
-        <span id="goods-in-cart-count"> {{ carts.total_quantity }}</span>
+        <img class="mx-1" src="{% static 'images/icons/basket2-fill.svg' %}" alt="Catalog Icon" 
+            width="24" height="24">
+        <span id="goods-in-cart-count">{{ carts.total_quantity }}</span>
     </button>
 </div>
 
-<!-- Розмітка модального вікна кошика -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Разметка модального окна корзины -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,15 +21,12 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h3 class="text-center mb-4">Кошик</h3>
+                <h3 class="text-center mb-4">Корзина</h3>
                 <div class="container" id="cart-items-container">
-                    {% include 'carts/_included_cart.html' %}    
+                    
+                    {% include "carts/_included_cart.html" %}
+                    
                 </div>
-                {% if carts %}
-                    <a class="btn btn-dark" href="{% url 'user:profile' %}">
-                        Оформити замовлення
-                    </a>
-                {% endif %}
             </div>
         </div>
     </div>

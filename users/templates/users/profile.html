@@ -2,15 +2,8 @@
 {% load static %}
 {% load carts_tags %} 
 
-
-{% block modal_cart %}
-    {% include '_cart_button.html' %}
-{% endblock %}
-
-{% block content %}   
-
-{% user_carts request as carts %}
-
+{% block content %} 
+  
 <div class="row">
     <div class="container mt-5">
         <div class="row">
@@ -101,13 +94,18 @@
 
                 </div>
             </div>
+
             <!-- Корзина -->
+            {% user_carts request as carts %}
+
             <div class="col-md-7">
                 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
                     <h3 class="text-center mb-4">Кошик</h3>
+
                     <div class="container" id="cart-items-container">
                         {% include 'carts/_included_cart.html' %} <!-- Розмітка коризини -->
                     </div>
+
                     {% if carts %}
                         <a class="btn btn-dark" href="{% url 'user:profile' %}">
                             Оформити замовлення
