@@ -7,7 +7,7 @@ from orders.models import Order
 class CreateOrderForm(Form):
     first_name = CharField()
     last_name = CharField()
-    phone_number =  ()
+    phone_number = PhoneNumberField(region="UA")
     
     requires_delivery = ChoiceField(
         choices=[
@@ -27,16 +27,17 @@ class CreateOrderForm(Form):
     
     
     def clean_phone_number(self):
-        data = self.cleaned_data['phone_number']
+        data = str(self.cleaned_data['phone_number'])
 
-        if not data.isdigit():
-            raise ValidationError("Номер телефону повинен містити тольки цифри")
+        # if not data.isdigit():
+        #     raise ValidationError("Номер телефону повинен містити тольки цифри")
         
-        pattern = re.compile(r'^\d{10}$')
-        if not pattern.match(data):
-            raise ValidationError("Неправильний формат номеру")
-
-        return data
+        #pattern = re.compile(r'^\d{12}$')
+        
+        #if not pattern.match(str(data)):
+        #    raise ValidationError("Неправильний формат номеру")
+        
+        return str(data)
     
     
     # first_name = CharField(

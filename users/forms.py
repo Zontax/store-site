@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.forms import ImageField, CharField, ModelForm, TextInput, PasswordInput, EmailField
+from phonenumber_field.formfields import PhoneNumberField
 from users.models import User
 
 
@@ -41,6 +42,7 @@ class UserProfileForm(UserChangeForm):
             'last_name', 
             'username', 
             'email',
+            'phone_number',
         )
     
     avatar_image = ImageField(required=False)
@@ -48,4 +50,5 @@ class UserProfileForm(UserChangeForm):
     last_name = CharField(required=False)
     username = CharField()
     email = EmailField()
+    phone_number = PhoneNumberField(region="UA")
     
