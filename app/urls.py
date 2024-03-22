@@ -2,7 +2,7 @@ from app import settings
 from app import settings
 from django.contrib import admin
 from django.conf.urls.static import static
-from django.urls import include, path
+from django.urls import URLResolver, include, path
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('catalog/', include('goods.urls', namespace='catalog')),
     path('user/', include('users.urls', namespace='user')),
     path('cart/', include('carts.urls', namespace='cart')),
+    path('orders/', include('orders.urls', namespace='order')),
 ]
 
 if settings.DEBUG:

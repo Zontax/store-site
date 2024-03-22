@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    description = TextField(max_length=500, blank=True, null=True, verbose_name='Опис профіля')
-    phone_number = PhoneNumberField(region='UA', blank=True, null=True)
+    description = TextField(max_length=500, blank=True, null=True, verbose_name='Опис профілю')
+    phone_number = PhoneNumberField(region='UA', blank=True, null=True, verbose_name='Номер телефону')
     avatar_image = ImageField(upload_to='users_avatar_images', blank=True, null=True, verbose_name='Аватар')
     
     class Meta():
@@ -14,6 +14,7 @@ class User(AbstractUser):
         verbose_name = 'Користувач'
         verbose_name_plural = 'Користувачі'
         ordering = ('id',)
+        
         
     def __str__(self):
         is_admin = ''

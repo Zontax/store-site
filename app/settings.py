@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "goods",
     "users",
     "carts",
+    "orders",
 ]
 
 # SILKY_MIDDLEWARE_CLASS = 'path.to.your.middleware.MyCustomSilkyMiddleware'
