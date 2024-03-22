@@ -1,9 +1,6 @@
-from itertools import product
-from tabnanny import verbose
 from django.db import models
-from django.db.models import Model, QuerySet, CharField, TextField, SlugField, DecimalField, PositiveIntegerField, ForeignKey, DateTimeField, BooleanField
+from django.db.models import Model, QuerySet, CharField, TextField, DecimalField, PositiveIntegerField, ForeignKey, DateTimeField, BooleanField
 from phonenumber_field.modelfields import PhoneNumberField
-from traitlets import default
 from users.models import User
 from goods.models import Product
 
@@ -37,9 +34,8 @@ class Order(Model):
 
 
     def __str__(self):
-        return f'Замовлення № {self.pk} | Покупець {self.user.first_name} {self.user.last_name} ({self.user.username}) | "{self.product.name}" {self.quantity} шт'
+        return f'Замовлення № {self.pk} | Покупець: {self.user.first_name} {self.user.last_name}'
 
-    
     
 class OrderItem(Model):
     order = ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name='Замовлення')
@@ -52,8 +48,8 @@ class OrderItem(Model):
     
     class Meta:
         db_table = 'order_items'
-        verbose_name='Проданий товар'
-        verbose_name_plural='Продані товари'
+        verbose_name='Товар замовлення'
+        verbose_name_plural='Товари замовлення'
         ordering = ('sale_date',)
 
     objects = OrderItemQuerySet().as_manager()
