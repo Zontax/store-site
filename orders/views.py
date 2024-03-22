@@ -34,7 +34,7 @@ def create_order(request: HttpRequest):
                             product = cart_item.product
                             name = cart_item.product.name
                             price = cart_item.product.sell_price()
-                            quantity = cart_item.product.quantity
+                            quantity = cart_item.quantity
                             
                             if product.quantity < quantity:
                                 raise ValidationError(f'Недостатньо товарів на складі, в наявності лише - {product.quantity}')
@@ -56,7 +56,7 @@ def create_order(request: HttpRequest):
                     
             except Exception as ex:
                 messages.success(request, str(ex))
-                return redirect('cart:order')
+                return redirect('order:create_order')
             
     else:
         initial = {
@@ -69,7 +69,8 @@ def create_order(request: HttpRequest):
         
     context = {
         'title': 'Оформлення замовлення',
-        'form': form    
+        'order': True,
+        'form': form
     }
         
     return render(request, 'orders/create_order.html', context=context)
