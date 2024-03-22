@@ -30,12 +30,16 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     
     "debug_toolbar",
+    'jet',
+    "phonenumber_field",
     
     "main",
     "goods",
     "users",
     "carts",
 ]
+
+# SILKY_MIDDLEWARE_CLASS = 'path.to.your.middleware.MyCustomSilkyMiddleware'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
