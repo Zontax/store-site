@@ -1,22 +1,21 @@
-import os
-from dotenv import load_dotenv, find_dotenv
+import os, environ
 from pathlib import Path
 from django.conf.global_settings import AUTH_USER_MODEL
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# Install all virtual env variables
-load_dotenv(find_dotenv())
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY =  env.str('DJANGO_SECRET_KEY', default='')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -28,10 +27,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    "django.contrib.sites",
     
+    #"jet",
     "debug_toolbar",
-    'jet',
     "phonenumber_field",
+    # "allauth",
+    # "allauth.account",
+    # "allauth.socialaccount",
     
     "main",
     "goods",
@@ -40,7 +43,7 @@ INSTALLED_APPS = [
     "orders",
 ]
 
-# SILKY_MIDDLEWARE_CLASS = 'path.to.your.middleware.MyCustomSilkyMiddleware'
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -71,6 +74,13 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+# django-allauth
+# https://docs.allauth.org/en/latest/installation/quickstart.html
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = "app.wsgi.application"
@@ -124,23 +134,22 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 INTERNAL_IPS = [
     "127.0.0.1",
-    os.getenv('INTERNAL_IPS_0'),
-    os.getenv('INTERNAL_IPS_1'),
-    os.getenv('INTERNAL_IPS_2'),
-    os.getenv('INTERNAL_IPS_3'),
-    os.getenv('INTERNAL_IPS_4'),
-    os.getenv('INTERNAL_IPS_5'),
+    env.str('INTERNAL_IPS_0', default=''),
+    env.str('INTERNAL_IPS_1', default=''),
+    env.str('INTERNAL_IPS_2', default=''),
+    env.str('INTERNAL_IPS_3', default=''),
+    env.str('INTERNAL_IPS_4', default=''),
+    env.str('INTERNAL_IPS_5', default=''),
 ]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Реструєм модель користувачів
+# Override default django values
 AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = '/user/login/'
+LOGIN_URL = 'user:login'
+EMAIL_HOST_USER = 'jrvadim04@gmail.com'
 
-# Товарів на сторінці
-GOODS_IN_PAGE = 6
-
-# Назва сайту
-SITE_NAME = 'Магазин'
+# Кастомні змінні
+GOODS_IN_PAGE = 6 # Товарів на сторінці
+SITE_NAME = env.str('SITE_NAME', 'Site') # Назва сайту

@@ -40,7 +40,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for="id_first_name" class="form-label">Ім'я*</label>
                                 <input type="text" class="form-control" 
-                                    value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}" 
+                                    value="{{ form.first_name.value|default:'' }}" 
                                     id="id_first_name"
                                     name="first_name"
                                     placeholder="Введіть ваше ім'я" 
@@ -53,7 +53,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for="id_last_name" class="form-label">Прізвище</label>
                                 <input type="text" class="form-control" 
-                                    value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"     
+                                    value="{{ form.last_name.value|default:'' }}"     
                                     id="id_last_name"
                                     name="last_name"
                                     placeholder="Введіть ваше прізвище">
@@ -65,7 +65,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for="id_username" class="form-label">Ім'я користувача*</label>
                                 <input type="text" class="form-control" 
-                                    value="{% if form.username.value %}{{ form.username.value }}{% endif %}" 
+                                    value="{{ form.username.value|default:'' }}" 
                                     id="id_username"
                                     name="username"
                                     placeholder="Введіть ваше ім'я користувача" 
@@ -78,7 +78,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for="id_email" class="form-label">Email*</label>
                                 <input type="email" class="form-control" 
-                                    value="{% if form.email.value %}{{ form.email.value }}{% endif %}" 
+                                    value="{{ form.email.value|default:'' }}" 
                                     id="id_email"
                                     name="email"
                                     placeholder="Введіть ваш email" 
@@ -91,7 +91,7 @@
                             <div class="col-md-12 mb-3">
                                 <label for="id_phone_number" class="form-label">Номер телефону* (+380-XX-XXX-XX-XX)</label>
                                 <input type="tel" class="form-control" pattern="(\+380\d{9}|0\d{9})"
-                                    value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}" 
+                                    value="{{ form.phone_number.value|default:'' }}" 
                                     id="id_phone_number"
                                     name="phone_number"
                                     placeholder="+380-XX-XXX-XX-XX"

@@ -1,11 +1,12 @@
 from django.core.paginator import Paginator
-from django.http import Http404, HttpResponseNotFound
+from django.http import Http404, HttpRequest, HttpResponseNotFound
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from goods.models import Product
 from app.settings import GOODS_IN_PAGE
-from goods.utilitis import q_search
+from goods.services import q_search
 
-def catalog(request, category_slug=None):
+
+def catalog(request: HttpRequest, category_slug=None):
     page = request.GET.get('page', 1)
     on_sale = request.GET.get('on_sale', None)
     order_by = request.GET.get('order_by', None)
@@ -35,7 +36,7 @@ def catalog(request, category_slug=None):
     return render(request, 'goods/catalog.html', context)
 
 
-def product(request, product_slug):
+def product(request: HttpRequest, product_slug):
     product = Product.objects.get(slug=product_slug)
     context = {
         'title': product.name,

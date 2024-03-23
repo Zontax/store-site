@@ -6,6 +6,12 @@
     {% include '_cart_button.html' %}
 {% endblock %}
 
+{% block css %}
+    {% if goods.paginator.count < 4 %}
+        <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
 <div class="row mt-1">
@@ -62,6 +68,8 @@
                     <button type="submit" class="btn btn-primary mx-3 mt-3">Застосувати</button>
 
                 </form>
+
+                <h3 class="ms-auto"></h3>
             </div>
 
             <!-- Результати пошуку -->
@@ -117,11 +125,10 @@
                                 <p class="product_id">id: {{ product.display_id }}</p>
                                 <div class="d-flex justify-content-between">
                                     {% if product.discount %}
+                                    
                                         <p><s>{{ product.price|floatformat:'0' }}</s> Грн</p>
-                                        <p>
-                                            <strong>{{ product.sell_price|floatformat:'0' }}</strong>
-                                            Грн
-                                        </p>
+                                        <p><strong>{{ product.sell_price|floatformat:'0' }}</strong>Грн</p>
+
                                         <span class="badge bg-warning text-dark">Знижка {{ product.discount }}%</span>
                                     {% else %}
                                         <p><strong>{{ product.price|floatformat:'0' }}</strong> Грн</p>
@@ -142,7 +149,7 @@
         </div>
 
         <!-- Пагінація -->
-        {% if goods %}
+        {% if goods.paginator.num_pages > 1 %}
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center my-4">
                     <div class="custom-shadow d-flex">
@@ -171,7 +178,7 @@
                 </ul>
             </nav>
         {% endif %}
-        
+        <br>
     </div>
 </div>
 

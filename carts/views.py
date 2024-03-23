@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from carts.utilitis import get_user_carts
+from carts.services import get_user_carts
 from goods.models import Product
 from carts.models import Cart
 # API для кошика

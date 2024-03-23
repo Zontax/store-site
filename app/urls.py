@@ -6,7 +6,7 @@ from django.urls import URLResolver, include, path
 
 
 urlpatterns = [
-    path('jet/', include('jet.urls', 'jet')),
+    # path('jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace='main')),
     path('catalog/', include('goods.urls', namespace='catalog')),

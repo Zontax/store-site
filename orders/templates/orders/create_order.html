@@ -40,6 +40,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="id_first_name" class="form-label">Ім'я*:</label>
                                         <input type="text" class="form-control" 
+                                            autofocus="true"
                                             value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
                                             id="id_first_name"
                                             name="first_name" 
@@ -64,7 +65,8 @@
                                         {% endif %}
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="id_phone_number" class="form-label">Номер телефону* (+380-XX-XXX-XX-XX):</label>
+                                        <label for="id_phone_number" class="form-label">
+                                            Номер телефону* (+380-XX-XXX-XX-XX):</label>
                                         <input type="text" class="form-control" pattern="(\+380\d{9}|0\d{9})"
                                             placeholder="Формат: +380-XX-XXX-XX-XX"
                                             value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}"
