@@ -7,7 +7,7 @@ class Category(Model):
     slug = SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL Slug')
     
     class Meta():
-        db_table = 'goods_categories'
+        db_table = 'categories'
         verbose_name = 'Категорія'
         verbose_name_plural = 'Категорії'
         
@@ -35,7 +35,7 @@ class Product(Model):
     created_timestamp = DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
     
     class Meta():
-        db_table = 'goods_products'
+        db_table = 'products'
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
         ordering = ('id',)

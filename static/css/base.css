@@ -22,6 +22,14 @@ footer {
     z-index: 9999;
 }
 
+.captcha {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 a {
     color: rgb(223, 223, 223);
 }

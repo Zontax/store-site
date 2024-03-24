@@ -1,6 +1,6 @@
 import os, environ
 from pathlib import Path
-from django.conf.global_settings import AUTH_USER_MODEL
+from django.conf.global_settings import AUTH_USER_MODEL, EMAIL_BACKEND, EMAIL_USE_SSL, EMAIL_USE_TLS
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -20,6 +20,13 @@ DEBUG = env.bool('DJANGO_DEBUG', default=False)
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    # Apps
+    "main",
+    "goods",
+    "users",
+    "carts",
+    "orders",
+    # Django
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -28,22 +35,38 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.postgres",
     "django.contrib.sites",
-    
-    #"jet",
-    "debug_toolbar",
-    "phonenumber_field",
+    # Installs
+    'debug_toolbar',
+    'phonenumber_field',
+    'captcha',
+    # 'django_recaptcha',  
     # "allauth",
     # "allauth.account",
     # "allauth.socialaccount",
-    
-    "main",
-    "goods",
-    "users",
-    "carts",
-    "orders",
+    # 'allauth.socialaccount.providers.google',
 ]
 
+# django_recaptcha
+RECAPTCHA_PUBLIC_KEY = '6LfBz6IpAAAAAC5Avijv_rOp7IXuWU26WLUQQgVp'
+RECAPTCHA_PRIVATE_KEY = '6LfBz6IpAAAAAC5Avijv_rOp7IXuWU26WLUQQgVp'
+# RECAPTCHA_DOMAIN = 'www.google.com'
+
+# django-allauth
+# https://docs.allauth.org/en/latest/installation/quickstart.html
 SITE_ID = 1
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    },
+}
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -53,8 +76,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # Installs
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
+    # "allauth.account.middleware.AccountMiddleware",  
 ]
 
 ROOT_URLCONF = "app.urls"
@@ -76,11 +100,10 @@ TEMPLATES = [
     },
 ]
 
-# django-allauth
-# https://docs.allauth.org/en/latest/installation/quickstart.html
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    # django-allauth
+    # 'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = "app.wsgi.application"
@@ -142,13 +165,28 @@ INTERNAL_IPS = [
     env.str('INTERNAL_IPS_5', default=''),
 ]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "media/cache"),
+    }
+}
+
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Override default django values
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'user:login'
-EMAIL_HOST_USER = 'jrvadim04@gmail.com'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+EMAIL_HOST = env.str('EMAIL_HOST', default=''),
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default=''),
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default=''),
 
 # Кастомні змінні
 GOODS_IN_PAGE = 6 # Товарів на сторінці

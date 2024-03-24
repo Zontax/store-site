@@ -1,4 +1,4 @@
-{% load static %}
+{% load static cache %}
 
 <!DOCTYPE html>
 <html lang="uk">
@@ -41,11 +41,15 @@
                         Каталог товарів
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        {% for category in all_categories %}
-                        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">
-                                {{ category.name }}</a>
-                        </li>
-                        {% endfor %}
+                        {% cache 60 category %}
+                        
+                            {% for category in all_categories %}
+                            <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">
+                                    {{ category.name }}</a>
+                            </li>
+                            {% endfor %}
+
+                        {% endcache %}
                     </ul>
                 </li>
                 <li><a href="{% url 'users:users_cart' %}" class="nav-link px-2 link-body-emphasis">Кошик</a></li>
@@ -123,9 +127,6 @@
 
         <div class="container">
             <div class="row mt1">
-                {% comment %} <div class="col-lg-2">
-                </div> {% endcomment %}
-
                 <div class="col-lg-10">
                     {% include '_notifications.html' %}   
                     {% block content %}{% endblock %} 

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static i18n allauth account %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+{% endblock %}
+
+{% block modal_cart %}
+    {% include '_cart_button.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 bg-white p-4 mb-4 mx-3 rounded custom-shadow">
+
+                <h2 class="text-center mb-4">Вхід</h2>
+                {% blocktrans %}
+                    Якщо ви ще не створили акаунт, будь ласка, <a href="{{ signup_url }}">зареєструйтесь</a>.
+                {% endblocktrans %}
+
+                {% url 'account_login' as login_url %}
+                
+                {% element form form=form method="post" action=login_url tags="entrance,login" %}
+                    {% slot body %}
+                        {% csrf_token %}
+                        {% element fields form=form unlabeled=True %}
+                        {% endelement %}
+                        {% if redirect_field_value %}
+                            <input type="hidden"
+                                name="{{ redirect_field_name }}"
+                                value="{{ redirect_field_value }}" />
+                        {% endif %}
+                    {% endslot %}
+                    {% slot actions %}
+                        {% element button type="submit" tags="prominent,login" %}
+                            {% trans "Sign In" %}
+                        {% endelement %}
+                    {% endslot %}
+                {% endelement %}
+
+                {% if SOCIALACCOUNT_ENABLED %}
+                    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

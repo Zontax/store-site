@@ -1,20 +1,31 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.forms import ModelForm, ImageField, CharField, TextInput, PasswordInput, EmailField, ValidationError
+# from django_recaptcha.fields import ReCaptchaField
+# from django_recaptcha.widgets import ReCaptchaV2Checkbox 
+from captcha.fields import CaptchaField
 from phonenumber_field.formfields import PhoneNumberField
 from django.contrib.auth.password_validation import validate_password
 from users.models import User
 
 
-class UserLoginForm(AuthenticationForm):
+class UserLoginForm(AuthenticationForm):    
+    username = CharField(label="Ім'я користувача")
+    password = CharField(label='Пароль')
+    
     class Meta:
         model = User
         fields = ['username', 'password']
-    
+        
+        
+class UserRegisterForm(UserCreationForm):    
+    first_name = CharField()
+    last_name = CharField(required=False)
     username = CharField(label="Ім'я користувача")
-    password = CharField(label='Пароль')
-        
-        
-class UserRegisterForm(UserCreationForm):
+    email = EmailField(label="Email адреса")
+    password1 = CharField(label='Пароль')
+    password2 = CharField(label='Повторити пароль')
+    captcha = CaptchaField(label='Введіть текст з рисунка')
+    
     class Meta:
         model = User
         fields = (
@@ -23,15 +34,9 @@ class UserRegisterForm(UserCreationForm):
             'username', 
             'email',
             'password1',
-            'password2'
+            'password2',
+            'captcha'
         )
-        
-    first_name = CharField()
-    last_name = CharField(required=False)
-    username = CharField(label="Ім'я користувача")
-    email = EmailField(label="Пошта")
-    password1 = CharField(label='Пароль')
-    password2 = CharField(label='Повторити пароль')
     
     
     def clean_password2(self):

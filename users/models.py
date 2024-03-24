@@ -10,8 +10,8 @@ class User(AbstractUser):
     description = TextField(max_length=500, blank=True, null=True, verbose_name='Опис профілю')
     phone_number = PhoneNumberField(region='UA', blank=True, null=True, verbose_name='Номер телефону')
     avatar_image = ImageField(upload_to='users_avatar_images', blank=True, null=True, verbose_name='Аватар')
-    # activation_key = CharField(max_length=100, blank=True, null=True, verbose_name='Опис профілю')
-
+    activation_key = CharField(max_length=80, blank=True, null=True, verbose_name='Код активації')
+    
     
     class Meta():
         db_table = 'users'

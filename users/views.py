@@ -1,3 +1,4 @@
+from re import I
 from django.db.models import Prefetch, prefetch_related_objects
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib import auth, messages
@@ -10,80 +11,113 @@ from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 from django.core.mail import send_mail
 from users.services import generate_code
 from users.models import User
-from app import settings
-
-
-# def test(request: HttpRequest):
-#     if request.method == 'POST':
-#         pass
-
-#     activation_code = generate_code('ACT_')
-#     context = {
-#         'activation_code': str(activation_code),
-#     }
-#     return render(request, 'users/activate.html', context)
-
-# def register(request: HttpRequest):
-#     if request.method == 'POST':
-#         form = UserRegisterForm(request.POST)
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.is_active = False
-#             activation_code = generate_code()
-#             user.save()
-           
-#             # Перенаправлення на сторінку активації з кодом активації в URL
-#             return redirect(reverse('user:activate', kwargs={'activation_code': activation_code}))
-#     else:
-#         form = UserRegisterForm()
-
-#     context = {
-#         'title': 'Реєстрація (По пошті)',
-#         'form': form
-#     }
-#     return render(request, 'users/register.html', context)
-
-    
-# def activate(request: HttpRequest):
-#     activation_code = request.GET.get('activation_code', None)
-    
-#     context = {
-#         'activation_code': str(activation_code),
-#     }
-#     return render(request, 'users/activate.html', context)
-    
-    
-# def activate_check(request: HttpRequest, activation_code=''):
-    
-#     messages.success(request, f'Код активації {activation_code}')
-#     return redirect(reverse('main:index'))
-
-#     #user.is_active = True
-#     # user.activation_code = ''  # Очищуємо код активації
-#     #user.save()
-
-#     #session_key = request.session.session_key
-
-#     #auth.login(request, user)
-        
-#     #carts = Cart.objects.filter(session_key=session_key)
-#     #carts.update(user=user)
-#     #carts.update(session_key=None)
-    
-#     return redirect(reverse('main:index'))
+from app.settings import EMAIL_HOST_USER, SITE_NAME
 
 
 def register(request: HttpRequest):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            activation_code = generate_code()
+            activation_url = request.build_absolute_uri(reverse('user:activate_check', args=[activation_code]))
+            
+            send_mail(
+                f"Код активації акаунта ({SITE_NAME})",
+                f"""<h2>Код активації акаунта</h2>
+                    Код: <b>{activation_code}</b>
+                    <p>або перейдіть за посиланням <a href="{activation_url}">{activation_url}</a></p>
+                """,
+                EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+            
+            existing_inactive_user = User.objects.filter(email=email, is_active=False).first()
+            if existing_inactive_user:
+                existing_inactive_user.delete()
+                
+            existing_active_user = User.objects.filter(email=email, is_active=True).first()
+            if existing_active_user:
+                messages.success(request, 'Користувач з такою самою адресою email вже зареєстрований і активний.')
+                context = {
+                    'title': 'Реєстрація',
+                    'form': form
+                }
+                return render(request, 'users/register.html', context)
+
+            # Створення нового користувача з введеною ​​поштою та кодом активації
+            user: User = form.save(commit=False)
+            user.is_active = False
+            user.activation_key = activation_code
+            user.save()
+            
+            # Перенаправлення на сторінку активації
+            return redirect(reverse('user:activate'))
+    else:
+        form = UserRegisterForm()
+
+    context = {
+        'title': 'Реєстрація',
+        'form': form
+    }
+    return render(request, 'users/register.html', context)
+
+
+def activate(request: HttpRequest):
+    context = {
+        'activaion_text': 'код ',
+    }
+    return render(request, 'users/activate.html', context)
+
+    
+def activate_check(request: HttpRequest, activation_code: str):
+    if request.method == 'POST':
+        activation_code_post = request.POST['activation_code']
+        
+        if activation_code_post:
+            activation_code = activation_code_post
+        
+    try:
+        user = User.objects.get(activation_key=activation_code)
+        
+    except User.DoesNotExist:
+        messages.success(request, 'Неправильний код активації')
+        return redirect(reverse('user:activate'))
+    
+    except Exception:
+        messages.success(request, 'Помилка активації')
+        return redirect(reverse('user:activate'))
+
+    user.is_active = True
+    user.activation_key = None
+    user.save()
+
+    session_key = request.session.session_key
+    
+    auth.login(request, user)
+    
+    carts = Cart.objects.filter(session_key=session_key)
+    carts.update(user=user)
+    carts.update(session_key=None)
+    
+    messages.success(request, 'Ви успішно зареєструвались та увійшли в акаунт')
+    
+    return redirect(reverse('user:profile'))
+
+
+def register_OLD(request: HttpRequest):
     
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         
         if form.is_valid():
             form.save()
-            user = form.instance
+            user: User = form.instance
             session_key = request.session.session_key
             
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             
             carts = Cart.objects.filter(session_key=session_key)
             carts.update(user=user)
@@ -122,7 +156,6 @@ def login(request: HttpRequest):
                     carts = Cart.objects.filter(session_key=session_key)
                     carts.update(user=user)
                     carts.update(session_key=None)
-                
                 
                 next_url = request.POST.get('next', None)
                 
