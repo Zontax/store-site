@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from users.services import generate_code
 from users.models import User
 from app.settings import EMAIL_HOST_USER, SITE_NAME
+from django.core.mail import EmailMessage
 
 
 def register(request: HttpRequest):
@@ -24,13 +25,13 @@ def register(request: HttpRequest):
             activation_url = request.build_absolute_uri(reverse('user:activate_check', args=[activation_code]))
             
             send_mail(
-                f"Код активації акаунта ({SITE_NAME})",
-                f"""<h2>Код активації акаунта</h2>
+                subject=f"Код активації акаунта ({SITE_NAME})",
+                message=f"""
+                    <h2>Код активації акаунта</h2>
                     Код: <b>{activation_code}</b>
-                    <p>або перейдіть за посиланням <a href="{activation_url}">{activation_url}</a></p>
-                """,
-                EMAIL_HOST_USER,
-                [email],
+                    <p>або перейдіть за посиланням <a href="{activation_url}">{activation_url}</a></p>""",
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[email,],
                 fail_silently=False,
             )
             
