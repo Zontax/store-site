@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load carts_tags %} 
+{% load static carts_tags %}
+
+{% block title %}
+    <title>Реєстрація</title>
+{% endblock %}
 
 {% block content %} 
   
@@ -12,7 +15,7 @@
                 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
                     <h3 class="text-center mb-4">Профіль користувача</h3>
 
-                    <form action="{% url 'user:profile' %}" method="POST" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
 
                         <div class="row">
@@ -95,8 +98,7 @@
                                     value="{{ form.phone_number.value|default:'' }}" 
                                     id="id_phone_number"
                                     name="phone_number"
-                                    placeholder="+380-XX-XXX-XX-XX"
-                                    required>
+                                    placeholder="+380-XX-XXX-XX-XX">
                                 {% if form.phone_number.errors %}
                                     <div class="alert alert-danger alert-dismissible fade show">
                                         {{ form.phone_number.errors }}</div>

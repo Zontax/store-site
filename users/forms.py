@@ -1,32 +1,28 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import ModelForm, ImageField, CharField, TextInput, PasswordInput, EmailField, ValidationError
-# from django_recaptcha.fields import ReCaptchaField
-# from django_recaptcha.widgets import ReCaptchaV2Checkbox 
+from django.forms import Form, ModelForm, ImageField, CharField, TextInput, PasswordInput, EmailField, ValidationError
 from captcha.fields import CaptchaField
 from phonenumber_field.formfields import PhoneNumberField
 from django.contrib.auth.password_validation import validate_password
 from users.models import User
 
+User = get_user_model()
 
 class UserLoginForm(AuthenticationForm):    
-    username = CharField(label="Ім'я користувача")
+    username = CharField(label="Пошта Email")
     password = CharField(label='Пароль')
-    
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-        
+
         
 class UserRegisterForm(UserCreationForm):    
     first_name = CharField()
     last_name = CharField(required=False)
     username = CharField(label="Ім'я користувача")
-    email = EmailField(label="Email адреса")
+    email = EmailField(label="Пошта Email")
     password1 = CharField(label='Пароль')
     password2 = CharField(label='Повторити пароль')
-    captcha = CaptchaField(label='Введіть текст з рисунка')
+    # captcha = CaptchaField(label='Введіть текст з рисунка')
     
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
         fields = (
             'first_name', 
@@ -35,23 +31,18 @@ class UserRegisterForm(UserCreationForm):
             'email',
             'password1',
             'password2',
-            'captcha'
+            # 'captcha'
         )
     
     
-    def clean_password2(self):
-        password2 = super().clean_password2()  # Викликаємо стандартний метод clean_password2()
-
-        # Додаткові перевірки
-        # Наприклад, перевірка довжини пароля
-        if len(password2) < 8:
-            raise ValidationError("Пароль повинен містити щонайменше 8 символів", code='password_too_short')
-
-        return password2
-    
-    
-    
 class UserProfileForm(UserChangeForm):
+    avatar_image = ImageField(required=False)
+    first_name = CharField()
+    last_name = CharField(required=False)
+    username = CharField()
+    email = EmailField(disabled=True)
+    phone_number = PhoneNumberField(region="UA", required=False)
+    
     class Meta:
         model = User
         fields = (
@@ -62,11 +53,7 @@ class UserProfileForm(UserChangeForm):
             'email',
             'phone_number',
         )
-    
-    avatar_image = ImageField(required=False)
-    first_name = CharField()
-    last_name = CharField(required=False)
-    username = CharField()
-    email = EmailField()
-    phone_number = PhoneNumberField(region="UA")
-    
+
+
+class ResetTokenForm(Form):
+    token = CharField(required=True)

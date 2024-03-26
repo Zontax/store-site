@@ -1,6 +1,7 @@
 import os, environ
+from telnetlib import LOGOUT
 from pathlib import Path
-from django.conf.global_settings import AUTH_USER_MODEL, EMAIL_BACKEND, EMAIL_USE_SSL, EMAIL_USE_TLS
+from django.conf.global_settings import AUTH_USER_MODEL, EMAIL_BACKEND, EMAIL_USE_SSL, EMAIL_USE_TLS, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -22,8 +23,8 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Apps
     "main",
-    "goods",
     "users",
+    "goods",
     "carts",
     "orders",
     # Django
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
 # django_recaptcha
 RECAPTCHA_PUBLIC_KEY = '6LfBz6IpAAAAAC5Avijv_rOp7IXuWU26WLUQQgVp'
 RECAPTCHA_PRIVATE_KEY = '6LfBz6IpAAAAAC5Avijv_rOp7IXuWU26WLUQQgVp'
-# RECAPTCHA_DOMAIN = 'www.google.com'
+RECAPTCHA_DOMAIN = 'www.google.com'
 
 # django-allauth
 # https://docs.allauth.org/en/latest/installation/quickstart.html
@@ -131,15 +132,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    # },
     # {
     #     "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     # },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    # },
 ]
 
 # Internationalization
@@ -177,6 +178,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Override default django values
 AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = 'main:index'
 LOGIN_URL = 'user:login'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -190,4 +192,4 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default=''),
 
 # Кастомні змінні
 GOODS_IN_PAGE = 6 # Товарів на сторінці
-SITE_NAME = env.str('SITE_NAME', 'Site') # Назва сайту
+SITE_NAME = env.str('SITE_TITLE', 'Site')

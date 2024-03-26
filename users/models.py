@@ -6,18 +6,20 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True, verbose_name='Email')
+    email = models.EmailField(unique=True, verbose_name='Пошта Email')
     description = TextField(max_length=500, blank=True, null=True, verbose_name='Опис профілю')
     phone_number = PhoneNumberField(region='UA', blank=True, null=True, verbose_name='Номер телефону')
     avatar_image = ImageField(upload_to='users_avatar_images', blank=True, null=True, verbose_name='Аватар')
     activation_key = CharField(max_length=80, blank=True, null=True, verbose_name='Код активації')
     
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     
     class Meta():
         db_table = 'users'
         verbose_name = 'Користувач'
         verbose_name_plural = 'Користувачі'
-        ordering = ('id',)
+        ordering = ('date_joined',)
         
         
     def __str__(self):

@@ -1,19 +1,18 @@
-from django.urls import path
-from users import views
+from django.urls import include, path
+from users.views import UserRegisterView, UserLoginView, UserProfileView, ResetWaitView, users_cart, register_confirm
 
 app_name = 'users'
 
 urlpatterns = [
-    path('login/', views.login, name='login'),
-    path('register/', views.register, name='register'),
+    path('register/', UserRegisterView.as_view(), name='register'),
+    path('login/', UserLoginView.as_view(), name='login'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('reset_wait/', ResetWaitView.as_view(), name='reset_wait'),
+    path('register_confirm/<token>/', register_confirm, name='register_confirm'),
+    path('cart/', users_cart, name='users_cart'),
+    path('', include('django.contrib.auth.urls')),
     
-    path('activate/', views.activate, name='activate'),
-    path('activate_check/<str:activation_code>/', views.activate_check, name='activate_check'),
-    # path('password-reset/', views.test, name='password_reset'),
-    # path('test/', views.test, name='test'),
-    
-    path('profile/', views.profile, name='profile'),
-    path('logout/', views.logout, name='logout'),
-    path('users-cart/', views.users_cart, name='users_cart'),
-    
+    # path('login/', views.login, name='login'),
+    # path('activate/', views.activate, name='activate'),
+    # path('logout/', views.logout, name='logout'),
 ]

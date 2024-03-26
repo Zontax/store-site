@@ -8,13 +8,13 @@ from django.urls import include, path
 urlpatterns = [    
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace='main')),
-    path('catalog/', include('goods.urls', namespace='catalog')),
     path('user/', include('users.urls', namespace='user')),
+    path('catalog/', include('goods.urls', namespace='catalog')),
     path('cart/', include('carts.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='order')),
     # Installs urls
     path('captcha/', include('captcha.urls')),
-    # path('accounts/', include('allauth.urls')),
+    #1path('11accounts/', include('allauth.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

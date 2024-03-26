@@ -13,14 +13,14 @@ def catalog(request: HttpRequest, category_slug=None):
     query = request.GET.get('q', '')
     
     if category_slug == 'all' or query.strip() == '':
-        goods = Product.objects.all()
+        goods = Product.objects.all().filter(is_active=True)
     elif query:
-        goods = q_search(query)
+        goods = q_search(query).filter(is_active=True)
     else:
         goods = Product.objects.filter(category__slug=category_slug)
         
     if on_sale:
-        goods = goods.filter(discount__gt=0) # фільтр по знижці більшій за нуль
+        goods = goods.filter(discount__gt=0, is_active=True) # фільтр по знижці більшій за нуль
         
     if order_by and order_by != 'default':
         goods = goods.order_by(order_by) # сортування

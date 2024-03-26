@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+{% endblock %}
 
 {% block modal_cart %}
     {% include '_cart_button.html' %}

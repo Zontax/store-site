@@ -1,6 +1,7 @@
+from django.urls import reverse
 from django.db import models
 from django.db.models import Model, CharField, SlugField, BooleanField, TextField, ImageField, DecimalField, PositiveIntegerField, DateTimeField, ForeignKey
-from django.urls import reverse
+
 
 class Category(Model):
     name = CharField(max_length=150, unique=True, verbose_name='Назва')
@@ -47,7 +48,7 @@ class Product(Model):
     
     def get_absolute_url(self): # Посилання на товар в адмінці
         return reverse('catalog:product', kwargs={'product_slug': self.slug})
-
+    
 
     def display_id(self): # Велике id
         return f'{self.id:05}' 
@@ -58,3 +59,5 @@ class Product(Model):
             return round(self.price - self.price * (self.discount / 100), 2) 
         
         return self.price
+    
+    

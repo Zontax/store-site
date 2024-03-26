@@ -1,10 +1,11 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
-from main import views
+from main.views import IndexView, AboutView
+from django.views.generic import TemplateView
 
 app_name = 'main'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about/', cache_page(60)(views.about), name='about'),
+    path('', IndexView.as_view(), name='index'),
+    path('about/', AboutView.as_view(), name='about'),
 ]

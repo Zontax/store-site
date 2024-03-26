@@ -16,9 +16,9 @@
     {% block title %}
         <title>
             {% if title %}
-                {{ title }} - {{ site_name }}
+                {{ title }} - {{ site_title }}
             {% else %}
-                {{ site_name }}
+                {{ site_title }}
             {% endif %}
         </title>
     {% endblock %}
@@ -32,11 +32,11 @@
             <a href="{% url 'main:index' %}"
                 class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                 <img src="{% static 'favicon.ico' %}" alt="Index" width="32" height="32" class="me-3">
-                <span class="fs-4 me-2">{{ site_name }}</span>
+                <span class="fs-4 me-2">{{ site_title }}</span>
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                    <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Каталог товарів
                     </a>
@@ -142,7 +142,7 @@
                     <use xlink:href="#bootstrap"></use>
                 </svg>
             </a>
-            <span class="mb-3 mb-md-0 text-body-secondary">&copy; {{ current_year }} - {{ site_name }}</span>
+            <span class="mb-3 mb-md-0 text-body-secondary">&copy; {{ current_year }} - {{ site_title }}</span>
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
