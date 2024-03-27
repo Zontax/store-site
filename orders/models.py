@@ -30,7 +30,7 @@ class Order(Model):
         db_table = 'orders'
         verbose_name='Замовлення'
         verbose_name_plural='Замовлення'
-        ordering = ('created_timestamp',)
+        ordering = ('-created_timestamp',)
 
 
     def __str__(self):

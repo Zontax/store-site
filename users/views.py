@@ -13,7 +13,7 @@ from django.views.generic import FormView
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, ResetTokenForm
 from carts.models import Cart
 from orders.models import Order, OrderItem
-from users.services import generate_code
+from users.services import generate_token
 from users.models import User
 from app.settings import EMAIL_HOST_USER, SITE_NAME
 
@@ -21,7 +21,7 @@ from app.settings import EMAIL_HOST_USER, SITE_NAME
 class UserRegisterView(FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
-    success_url = reverse_lazy('user:login')
+    success_url = reverse_lazy('user:reset_wait')
     
     def form_valid(self, form: UserRegisterForm):
         
@@ -29,7 +29,7 @@ class UserRegisterView(FormView):
         user, created = User.objects.get_or_create(email=email)
         
         if created or user.is_active == False:
-            activation_code = generate_code()
+            activation_code = generate_token()
             activation_url = self.request.build_absolute_uri(
                 reverse_lazy('user:register_confirm', kwargs={ "token": activation_code}))
             
@@ -63,8 +63,12 @@ class UserRegisterView(FormView):
 class UserLoginView(LoginView):
     form_class = UserLoginForm
     template_name = 'users/login.html'
-    
+
     def get_success_url(self):
+        # next_url = self.request.POST['next']
+        # if next_url and next_url != reverse('user:logout'):
+        #     return redirect(next_url)
+    
         return reverse('user:profile')
 
     
@@ -72,7 +76,7 @@ class UserLoginView(LoginView):
 class UserProfileView(View):
     template_name = 'users/profile.html'
     
-    def get(self, request):
+    def get(self, request: HttpRequest):
         form = UserProfileForm(instance=request.user)
         orders = (Order.objects.filter(user=request.user)
             .prefetch_related(
@@ -112,35 +116,26 @@ class UserProfileView(View):
         def get_context_data(self):
             
             return context
-    
 
-@login_required
-def logout(request: HttpRequest):
-    
-    messages.success(request, 'Ви вийшли з акаунта')    
-    auth.logout(request)
-    return redirect(reverse('main:index'))
+
+class UserLogoutView(View): 
+       
+    def get(self, request: HttpRequest):
+        if request.user.is_authenticated:
+            messages.success(request, 'Ви вийшли з акаунта')
+            auth.logout(request)
+        return redirect(reverse('main:index'))
 
 
 class ResetWaitView(FormView):
     template_name = 'users/reset_wait.html'
-    form_class = UserRegisterForm
-    success_url = reverse_lazy('user:reset_wait')
+    form_class = ResetTokenForm
+    token: str
     
-    def form_valid(self, form: UserRegisterForm):
-        # Отримуємо токен з форми
-        token = form.cleaned_data['token']
-        # Зберігаємо токен у атрибуті об'єкту класу
-        self.token = token
-        # Викликаємо суперметод form_valid для виконання стандартних дій
+    def form_valid(self, form):
+        self.token = form.cleaned_data['token']
+        self.success_url = reverse_lazy('user:register_confirm', kwargs={'token': self.token})
         return super().form_valid(form)
-    
-    
-    def get_success_url(self) -> str:
-        if hasattr(self, 'token'):
-            return reverse('user:register_confirm', kwargs={"token": self.token})
-        else:
-            return super().get_success_url() 
     
 
 def register_confirm(request: HttpRequest, token: str): 
@@ -148,7 +143,7 @@ def register_confirm(request: HttpRequest, token: str):
         user = User.objects.get(activation_key=token)
         
     except User.DoesNotExist:
-        messages.success(request, 'Неправильний код активації або він застарів')
+        messages.error(request, 'Неправильний код активації або він застарів')
         return redirect(reverse('user:reset_wait'))
     
     except Exception:
@@ -172,84 +167,6 @@ def register_confirm(request: HttpRequest, token: str):
     return redirect(reverse('user:profile'))
 
 
-def activate(request: HttpRequest):
-    context = {
-        'activaion_text': 'код ',
-    }
-    return render(request, 'users/activate.html', context)
-
-
-@login_required
-def profile(request: HttpRequest):
-    ...
-
-
 def users_cart(request: HttpRequest):
     
     return render(request, 'users/users_cart.html')
-
-
-def login_OLD(request: HttpRequest):
-    
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        
-        if form.is_valid():
-            
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            session_key = request.session.session_key
-            
-            if user:
-                auth.login(request, user)
-                messages.success(request, f'{request.user.username}, Ви успішно увійшли в акаунт')
-                
-                if session_key:
-                    carts = Cart.objects.filter(session_key=session_key)
-                    carts.update(user=user)
-                    carts.update(session_key=None)
-                
-                next_url = request.POST.get('next', None)
-                
-                if next_url and next_url != reverse('user:logout'):  # редірект на бажану сторінку після входу
-                    return redirect(next_url)
-                    
-                return redirect(reverse('main:index'))
-    else:
-        form = UserLoginForm()
-
-    context = {
-        'title': 'Авторизація',
-        'form': form
-    }
-    return render(request, 'users/login.html', context)
-
-
-def register_OLD(request: HttpRequest):
-    
-    if request.method == 'POST':
-        form = UserRegisterForm(data=request.POST)
-        
-        if form.is_valid():
-            form.save()
-            user: User = form.instance
-            session_key = request.session.session_key
-            
-            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            
-            carts = Cart.objects.filter(session_key=session_key)
-            carts.update(user=user)
-            carts.update(session_key=None)
-            
-            messages.success(request, 'Ви успішно зареєструвались та увійшли в акаунт')
-            
-            return redirect(reverse('main:index'))
-    else:
-        form = UserRegisterForm()
-        
-    context = {
-        'title': 'Реєстрація',
-        'form': form
-    }
-    return render(request, 'users/register.html', context)

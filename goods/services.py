@@ -4,13 +4,12 @@ from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 
 def q_search(query):
     
-    # Пошук по id
     if isinstance(query, str):
+        # Пошук по id
         if query.isdigit() and len(query) <= 5: 
             return Product.objects.filter(id=int(query)) 
         
-        # Пошук по словах (від postgre)
-        vector = SearchVector('name', 'description')
+        vector = SearchVector('name', 'description', 'meta_keywords') # Пошук по словах (від postgre)
         query = SearchQuery(query)
          
         result = (
@@ -18,7 +17,7 @@ def q_search(query):
                     .annotate(rank=SearchRank(vector, query))
                     .filter(rank__gt=0)
                     .order_by('-rank')
-        )
+                    )
         result = result.annotate(
             headline=SearchHeadline(
                 'name',
@@ -26,7 +25,6 @@ def q_search(query):
                 start_sel='<span style="background-color: yellow;">',
                 stop_sel='</span>',
         ))
-        
         result = result.annotate(
             bodyline=SearchHeadline(
                 'description',
@@ -34,8 +32,7 @@ def q_search(query):
                 start_sel='<span style="background-color: yellow;">',
                 stop_sel='</span>',
         ))
-        
         return result
-        
     else:
         return Product.objects.all()
+    

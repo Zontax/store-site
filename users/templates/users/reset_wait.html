@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    <title>Відновлення паролю</title>
+    <title>Підтвердження - {{ site_title }}</title>
 {% endblock %}
 
 {% block css %}
@@ -19,7 +19,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6 bg-white p-4 mb-4 mx-3 rounded custom-shadow">
-                <h2 class="text-center mb-4">На ваш email надіслано лист з посиланням для підтвердження акаунта</h2>
+                <h4 class="text-center mb-4">На ваш email надіслано лист з посиланням для підтвердження акаунта</h4>
 
                 <form method="POST">
                     {% csrf_token %}
@@ -31,11 +31,11 @@
                     {% endif %}
 
                     <div class="mb-3">
-                        <label for="id_key" class="form-label">Введіть код</label>
+                        <label for="id_token" class="form-label">Введіть код</label>
                         <input type="text" class="form-control" 
                             autofocus="true"
-                            id="id_key" 
-                            name="key"
+                            id="id_token" 
+                            name="token"
                             placeholder="Код активації" 
                             required>
                     </div>

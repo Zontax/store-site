@@ -113,12 +113,12 @@ WSGI_APPLICATION = "app.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django_store",
-        "USER": "store",
-        "PASSWORD": "store",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": env.str('DB_ENGINE', default='django.db.backends.sqlite3'),
+        "NAME": env.str('DB_NAME', default=''),
+        "USER": env.str('DB_USER'),
+        "PASSWORD": env.str('DB_PASSWORD'),
+        "HOST": env.str('DB_HOST'),
+        "PORT": env.str('DB_PORT'),
     },
     # "default": {
     #     "ENGINE": "django.db.backends.sqlite3",
@@ -132,15 +132,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    # {
-    #     "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    # },
-    # {
-    #     "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    # },
-    # {
-    #     "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    # },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 # Internationalization
@@ -160,10 +160,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
     env.str('INTERNAL_IPS_0', default=''),
     env.str('INTERNAL_IPS_1', default=''),
-    env.str('INTERNAL_IPS_2', default=''),
-    env.str('INTERNAL_IPS_3', default=''),
-    env.str('INTERNAL_IPS_4', default=''),
-    env.str('INTERNAL_IPS_5', default=''),
 ]
 
 CACHES = {

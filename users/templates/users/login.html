@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    <title>Вхід</title>
+    <title>Вхід - {{ site_title }}</title>
 {% endblock %}
 
 {% block css %}
@@ -53,6 +53,15 @@
                             name="password"
                             placeholder="Введіть ваш пароль" 
                             required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="id_captcha" class="form-label">{{ form.captcha.label }}*</label>
+                        {{ form.captcha }}
+
+                        {% if form.captcha.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show">{{ form.captcha.errors }}</div>
+                        {% endif %}
                     </div>
                     
                     <button type="submit" class="btn btn-dark btn-block">Увійти</button> 

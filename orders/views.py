@@ -1,18 +1,34 @@
-from email import message
-from django.contrib import messages
-from django.db import transaction
-from django.forms import ValidationError
-from django.http import HttpRequest
-from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
+from django.urls import reverse
+from django.db import transaction
+from django.views.generic import View
+from django.http import HttpRequest
 from carts.models import Cart
 from orders.models import Order, OrderItem
 from orders.forms import CreateOrderForm
 
 
-@login_required
-def create_order(request: HttpRequest):
-    if request.method == 'POST':
+@method_decorator(login_required, name='dispatch')
+class CreateOrderView(View):
+    
+    def get(self, request: HttpRequest):
+        initial = {
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'phone_number': request.user.phone_number
+        }
+        form = CreateOrderForm(initial=initial)
+        context = {
+            'title': 'Оформлення замовлення',
+            'order': True,
+            'form': form
+        }
+        return render(request, 'orders/create_order.html', context=context)
+
+    def post(self, request):
         form = CreateOrderForm(data=request.POST)
         if form.is_valid():
             try:
@@ -21,7 +37,6 @@ def create_order(request: HttpRequest):
                     cart_items = Cart.objects.all()
                     
                     if cart_items.exists():
-                        
                         order = Order.objects.create(
                             user=user,
                             phone_number=form.cleaned_data['phone_number'],
@@ -37,7 +52,9 @@ def create_order(request: HttpRequest):
                             quantity = cart_item.quantity
                             
                             if product.quantity < quantity:
-                                raise ValidationError(f'Недостатньо товарів на складі, в наявності лише - {product.quantity}')
+                                messages.error(request, f'Недостатньо товарів, "{product.name}" в наявності лише - {product.quantity} шт.')
+                                transaction.set_rollback(True)
+                                return redirect('orders:create_order')
                             
                             OrderItem.objects.create(
                                 order=order,
@@ -48,39 +65,20 @@ def create_order(request: HttpRequest):
                             )
                             product.quantity -= quantity
                             product.save()
-                            
+                        
                         cart_items.delete()
                         
                         messages.success(request, 'Замовлення оформлено!')
                         return redirect('user:profile')
                     
             except Exception as ex:
-                messages.success(request, str(ex))
-                return redirect('order:create_order')
-            
-    else:
-        initial = {
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'phone_number': request.user.phone_number
+                messages.error(request, str(ex))
+                transaction.set_rollback(True)
+                return redirect('orders:create_order')
+        
+        context = {
+            'title': 'Оформлення замовлення',
+            'order': True,
+            'form': form
         }
-        
-        form = CreateOrderForm(initial=initial)
-        
-    context = {
-        'title': 'Оформлення замовлення',
-        'order': True,
-        'form': form
-    }
-        
-    return render(request, 'orders/create_order.html', context=context)
-        
-    # page = request.GET.get('page', 1)
-    # on_sale = request.GET.get('on_sale', None)
-    # order_by = request.GET.get('order_by', None)
-    # query = request.GET.get('q', None)
-    # goods = Product.objects.all()
-    # paginator = Paginator(goods, GOODS_IN_PAGE)
-    # goods_in_page = paginator.page(int(page));    
-  
-    
+        return render(request, 'orders/create_order.html', context=context)

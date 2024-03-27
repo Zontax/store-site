@@ -26,7 +26,7 @@ class Product(Model):
     slug = SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL Slug')
     product_code = CharField(max_length=25, unique=True, blank=True, null=True, verbose_name='Код товара')
     description = TextField(max_length=1000, blank=True, null=True, verbose_name='Опис')
-    meta_keywords = TextField(max_length=1000, blank=True, null=True, verbose_name='SEO ключі')
+    meta_keywords = CharField(max_length=400, blank=True, null=True, verbose_name='Meta інформація')
     image = ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Зображення')
     price = DecimalField(default=0.00, max_digits=10, decimal_places=2, verbose_name='Ціна')
     discount = DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Знижка, %')
@@ -39,7 +39,7 @@ class Product(Model):
         db_table = 'products'
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
-        ordering = ('id',)
+        ordering = ('-created_timestamp',)
         
         
     def __str__(self):

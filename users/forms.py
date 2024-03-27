@@ -11,6 +11,7 @@ User = get_user_model()
 class UserLoginForm(AuthenticationForm):    
     username = CharField(label="Пошта Email")
     password = CharField(label='Пароль')
+    captcha = CaptchaField(label='Введіть текст з рисунка')
 
         
 class UserRegisterForm(UserCreationForm):    
@@ -20,7 +21,7 @@ class UserRegisterForm(UserCreationForm):
     email = EmailField(label="Пошта Email")
     password1 = CharField(label='Пароль')
     password2 = CharField(label='Повторити пароль')
-    # captcha = CaptchaField(label='Введіть текст з рисунка')
+    captcha = CaptchaField(label='Введіть текст з рисунка')
     
     class Meta(UserCreationForm.Meta):
         model = User
@@ -31,7 +32,7 @@ class UserRegisterForm(UserCreationForm):
             'email',
             'password1',
             'password2',
-            # 'captcha'
+            'captcha'
         )
     
     
