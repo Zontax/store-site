@@ -1,11 +1,11 @@
-from django.urls import reverse
-from django.db import models
 from django.db.models import Model, CharField, SlugField, BooleanField, TextField, ImageField, DecimalField, PositiveIntegerField, DateTimeField, ForeignKey
+from django.db import models
+from django.urls import reverse
 
 
 class Category(Model):
-    name = CharField(max_length=150, unique=True, verbose_name='Назва')
-    slug = SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL Slug')
+    name = CharField('Назва', max_length=150, unique=True)
+    slug = SlugField('URL Slug', max_length=200, unique=True, blank=True, null=True)
     
     class Meta():
         db_table = 'categories'
@@ -22,18 +22,18 @@ class Category(Model):
 
 
 class Product(Model):
-    name = CharField(max_length=150, unique=True, verbose_name='Назва')
-    slug = SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL Slug')
-    product_code = CharField(max_length=25, unique=True, blank=True, null=True, verbose_name='Код товара')
-    description = TextField(max_length=1000, blank=True, null=True, verbose_name='Опис')
-    meta_keywords = CharField(max_length=400, blank=True, null=True, verbose_name='Meta інформація')
-    image = ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Зображення')
-    price = DecimalField(default=0.00, max_digits=10, decimal_places=2, verbose_name='Ціна')
-    discount = DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Знижка, %')
-    quantity = PositiveIntegerField(default=0, verbose_name='На складі')
-    category = ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='Категорія')
+    name = CharField('Назва', max_length=150, unique=True)
+    slug = SlugField('URL Slug', max_length=200, unique=True, blank=True, null=True)
+    product_code = CharField('Код товара', max_length=25, unique=True, blank=True, null=True)
+    description = TextField('Опис', max_length=1000, blank=True, null=True)
+    meta_keywords = CharField('Meta інформація', max_length=400, blank=True, null=True)
+    image = ImageField('Зображення', upload_to='goods_images', blank=True, null=True)
+    price = DecimalField('Ціна', default=0.00, max_digits=10, decimal_places=2)
+    discount = DecimalField('Знижка, %', default=0.00, max_digits=4, decimal_places=2)
+    quantity = PositiveIntegerField('На складі', default=0)
+    category = ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категорія')
     is_active = BooleanField(default=True, verbose_name='Чи доступний')
-    created_timestamp = DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
+    created_timestamp = DateTimeField('Дата додавання', auto_now_add=True)
     
     class Meta():
         db_table = 'products'

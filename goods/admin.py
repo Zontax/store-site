@@ -1,13 +1,11 @@
 from django.utils.html import format_html
 from django.contrib import admin
+
 from goods.models import Category, Product
 
-# admin.site.register(Category)
-
-# Автозаповнення для slug
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {'slug': ('name',)} # автозаповнення для slug
     list_display = ['name',] # відображення по назві а не __str__()
     
 @admin.register(Product)

@@ -1,6 +1,8 @@
-from goods.models import Product
-from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchHeadline
+from django.db.models import Q
+
+from goods.models import Product
+
 
 def q_search(query):
     
@@ -35,4 +37,3 @@ def q_search(query):
         return result
     else:
         return Product.objects.all()
-    

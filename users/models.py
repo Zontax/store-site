@@ -1,16 +1,17 @@
-from django.db.models import Model, CharField, SlugField, TextField, ImageField, DecimalField, PositiveIntegerField, ForeignKey
-from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models import CharField, TextField, ImageField
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db import models
+
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True, verbose_name='Пошта Email')
-    description = TextField(max_length=500, blank=True, null=True, verbose_name='Опис профілю')
-    phone_number = PhoneNumberField(region='UA', blank=True, null=True, verbose_name='Номер телефону')
-    avatar_image = ImageField(upload_to='users_avatar_images', blank=True, null=True, verbose_name='Аватар')
-    activation_key = CharField(max_length=80, blank=True, null=True, verbose_name='Код активації')
+    email = models.EmailField('Пошта Email', unique=True)
+    description = TextField('Опис профілю', max_length=500, blank=True, null=True)
+    phone_number = PhoneNumberField('Номер телефону', region='UA', blank=True, null=True)
+    avatar_image = ImageField('Аватар', upload_to='users_avatar_images', blank=True, null=True)
+    activation_key = CharField('Код активації', max_length=80, blank=True, null=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

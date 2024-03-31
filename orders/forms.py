@@ -1,7 +1,6 @@
-import re
-from django.forms import Form, ImageField, CharField, ModelForm, TextInput, Textarea, EmailField, ChoiceField, RadioSelect, ValidationError
+from django.forms import Form, CharField, ChoiceField
+
 from phonenumber_field.formfields import PhoneNumberField
-from orders.models import Order
 
         
 class CreateOrderForm(Form):

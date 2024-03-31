@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
+
 from main.views import IndexView, AboutView
-from django.views.generic import TemplateView
 
 app_name = 'main'
 

@@ -1,5 +1,6 @@
+from django.db.models import Model, CharField, QuerySet, PositiveSmallIntegerField, ForeignKey, DateTimeField
 from django.db import models
-from django.db.models import Model, CharField, QuerySet, SlugField, DecimalField, PositiveSmallIntegerField, ForeignKey, DateTimeField
+
 from users.models import User
 from goods.models import Product
 
@@ -17,11 +18,11 @@ class CartQuerySet(QuerySet):
 
 
 class Cart(Model):
-    user = ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Власник корзини')
-    product = ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='Товар')
-    quantity = PositiveSmallIntegerField(default=0, verbose_name='Кількість')
-    session_key = CharField(max_length=32, blank=True, null=True, verbose_name='Не зареєстрований (ключ сесії)')
-    created_timestamp = DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
+    user = ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Власник корзини')
+    product = ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
+    quantity = PositiveSmallIntegerField('Кількість', default=0)
+    session_key = CharField('Не зареєстрований (ключ сесії)', max_length=32, blank=True, null=True)
+    created_timestamp = DateTimeField('Дата додавання', auto_now_add=True)
     
     class Meta:
         db_table = 'carts'

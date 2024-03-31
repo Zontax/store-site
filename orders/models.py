@@ -1,5 +1,6 @@
-from django.db import models
 from django.db.models import Model, QuerySet, CharField, TextField, DecimalField, PositiveIntegerField, ForeignKey, DateTimeField, BooleanField
+from django.db import models
+
 from phonenumber_field.modelfields import PhoneNumberField
 from users.models import User
 from goods.models import Product
@@ -17,14 +18,14 @@ class OrderItemQuerySet(QuerySet):
 
 
 class Order(Model):
-    user = ForeignKey(to=User, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='Покупець')
-    created_timestamp = DateTimeField(auto_now_add=True, verbose_name='Дата створення замовлення')
-    phone_number = PhoneNumberField(region='UA', blank=True, null=True, verbose_name='Номер телефону')
-    requires_delivery = BooleanField(default=False, verbose_name='Потрібна доставка')
-    delivery_address = TextField( blank=True, null=True, verbose_name='Адреса доставки')
-    payment_on_get = BooleanField(default=False, verbose_name='Оплата при отриманні')
-    is_paid = BooleanField(default=False, verbose_name='Оплачено')
-    status = CharField(max_length=50, default='В обробці...', verbose_name='Статус замовлення')
+    user = ForeignKey(User, on_delete=models.SET_DEFAULT, verbose_name='Покупець', default=None, blank=True, null=True)
+    created_timestamp = DateTimeField('Дата створення замовлення', auto_now_add=True)
+    phone_number = PhoneNumberField('Номер телефону', region='UA', blank=True, null=True)
+    requires_delivery = BooleanField('Потрібна доставка', default=False)
+    delivery_address = TextField('Адреса доставки', blank=True, null=True)
+    payment_on_get = BooleanField('Оплата при отриманні', default=False)
+    is_paid = BooleanField('Оплачено', default=False)
+    status = CharField('Статус замовлення', max_length=50, default='В обробці...')
     
     class Meta:
         db_table = 'orders'
@@ -38,13 +39,13 @@ class Order(Model):
 
     
 class OrderItem(Model):
-    order = ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name='Замовлення')
-    product = ForeignKey(to=Product, on_delete=models.SET_DEFAULT, default=None, null=True, verbose_name='Товар')
-    delivery_address = TextField( blank=True, null=True, verbose_name='Адреса доставки')
-    name = CharField(max_length=150, verbose_name='Назва')
-    price = DecimalField(max_digits=10, decimal_places=2, verbose_name='Назва')
-    quantity = PositiveIntegerField(default=0, verbose_name='Кількість' )
-    sale_date = DateTimeField(auto_now_add=True, verbose_name='Дата продажу')
+    order = ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Замовлення')
+    product = ForeignKey(Product, on_delete=models.SET_DEFAULT, verbose_name='Товар', default=None, null=True)
+    delivery_address = TextField('Адреса доставки', blank=True, null=True)
+    name = CharField('Назва', max_length=150)
+    price = DecimalField('Назва', max_digits=10, decimal_places=2)
+    quantity = PositiveIntegerField('Кількість', default=0)
+    sale_date = DateTimeField('Дата продажу', auto_now_add=True)
     
     class Meta:
         db_table = 'order_items'

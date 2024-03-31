@@ -1,6 +1,6 @@
 from django.http import HttpRequest
+
 from carts.models import Cart
-from goods.models import Product
 
 
 def get_user_carts(request: HttpRequest):

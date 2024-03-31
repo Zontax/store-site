@@ -24,23 +24,23 @@
                         <!-- Миниатюры -->
                         <div class="col-md-4">
                             {% if product.image %}
-                            <img src="{{ product.image.url }}" class="img-thumbnail" data-bs-toggle="modal"
-                                data-bs-target="#imageModal1">
+                                <img src="{{ product.image.url }}" class="img-thumbnail" data-bs-toggle="modal"
+                                    data-bs-target="#imageModal1">
                             {% else %}
-                            <img src="{% static 'images/Not found image.png' %}" class="img-thumbnail"
-                                data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <img src="{% static 'images/Not found image.png' %}" class="img-thumbnail">
                             {% endif %}
                         </div>
                         <div class="col-md-4 ">
                             <p class="product_id mt-3">id: {{ product.display_id }}</p>
                         </div>
-                        <!-- Увеличить изображение в модальном окне -->
+
+                        <!-- Збільшити  зображення в модальному вікні -->
                         <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label"
                             aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="imageModal1Label">Зображення 1</h5>
+                                        <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Закрыть"></button>
                                     </div>
@@ -52,6 +52,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <!-- Описание товара -->
                     <div class="card-body">

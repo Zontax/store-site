@@ -1,22 +1,20 @@
-from operator import truediv
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView, LogoutView, PasswordResetConfirmView
+from django.contrib.auth.views import LoginView
 from django.contrib import auth, messages
 from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.db.models import Prefetch
 from django.urls import reverse, reverse_lazy
-from django.views import View
 from django.views.generic import FormView
-from requests import get
+from django.views import View
+
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, ResetTokenForm, ResetPasswordForm, SetNewPasswordForm
-from carts.models import Cart
-from orders.models import Order, OrderItem
 from users.services import generate_token
 from users.models import User
+from carts.models import Cart
+from orders.models import Order, OrderItem
 from app.settings import EMAIL_HOST_USER, SITE_NAME
 
 
@@ -87,7 +85,7 @@ class UserProfileView(View):
         )
         context = {
             'form': form,
-            'orders': orders
+            'orders': orders,
         }
         return render(request, self.template_name, context)
         
@@ -109,15 +107,6 @@ class UserProfileView(View):
             'orders': orders
         }
         return render(request, self.template_name, context)
-        
-        
-        def get_success_url(self):
-            return reverse('user:profile')
-        
-        
-        def get_context_data(self):
-            
-            return context
 
 
 class UserLogoutView(View): 
@@ -234,6 +223,7 @@ class UserPasswordResetConfirmView(FormView):
             return None
 
 
+@method_decorator(login_required, name='dispatch')
 class UserCartView(View):
     
     def get(self, request: HttpRequest):

@@ -1,8 +1,8 @@
-from app import settings
-from app import settings
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
+
+from app import settings
 
 
 urlpatterns = [    

@@ -1,13 +1,10 @@
 from django.http import HttpRequest, JsonResponse
-from django.contrib import auth, messages
 from django.template.loader import render_to_string
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.urls import reverse
+
 from carts.services import get_user_carts
-from goods.models import Product
 from carts.models import Cart
-# API для кошика
+from goods.models import Product
+
 
 def cart_add(request: HttpRequest):
     product_id = request.POST.get('product_id')

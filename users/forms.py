@@ -1,10 +1,12 @@
-from django.contrib.auth import get_user_model
+from django.forms import Form, ImageField, CharField, EmailField, ValidationError
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import Form, ModelForm, ImageField, CharField, TextInput, PasswordInput, EmailField, ValidationError
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import get_user_model
+
 from captcha.fields import CaptchaField
 from phonenumber_field.formfields import PhoneNumberField
-from django.contrib.auth.password_validation import validate_password
 from users.models import User
+
 
 User = get_user_model()
 
