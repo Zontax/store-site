@@ -7,8 +7,23 @@ body.body {
     height: 100%;
 }
 
+div.advertisement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 101.1%;
+    margin: -17px;
+    padding: 0px;
+    padding-top: 5px;
+    background-color: rgb(222, 208, 19);
+}
+
 main div.container {
     padding: 0px 1.5%;
+}
+
+header {
+    margin-bottom: 0 !important;
 }
 
 footer {

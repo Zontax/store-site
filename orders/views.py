@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
-from django.urls import reverse
 from django.db import transaction
 from django.views.generic import View
 from django.http import HttpRequest

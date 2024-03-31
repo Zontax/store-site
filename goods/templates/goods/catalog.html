@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% load static %}
+{% load static cache %}
 {% load goods_tags %} 
 
 {% block modal_cart %}
@@ -7,9 +7,19 @@
 {% endblock %}
 
 {% block css %}
-    {% if goods.paginator.count < 4 %}
+    {% if goods|length < 4 %}
         <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
     {% endif %}
+{% endblock %}
+
+{% block advertisement %}
+    {% cache 30 advertisement %}
+    {% if advertisement %}
+            <div class="advertisement" style="{{ advertisement.css_style }}">
+                <h4>{{ advertisement.description }}</h4>
+            </div>
+    {% endif %}
+    {% endcache %}
 {% endblock %}
 
 {% block content %}

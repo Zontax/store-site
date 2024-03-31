@@ -71,6 +71,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Apps
+    'main.middleware.LogerMiddleware',
     # Installs
     'debug_toolbar.middleware.DebugToolbarMiddleware'
     # 'allauth.account.middleware.AccountMiddleware',  
@@ -140,7 +142,7 @@ TIME_ZONE = 'Europe/Kiev'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = 'media/'
@@ -174,4 +176,4 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default=''),
 
 # Кастомні змінні
 GOODS_IN_PAGE = 6 # Товарів на сторінці
-SITE_NAME = env.str('SITE_TITLE', 'Site')
+SITE_TITLE = env.str('SITE_TITLE', 'Site')

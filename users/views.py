@@ -15,7 +15,7 @@ from users.services import generate_token
 from users.models import User
 from carts.models import Cart
 from orders.models import Order, OrderItem
-from app.settings import EMAIL_HOST_USER, SITE_NAME
+from app.settings import EMAIL_HOST_USER, SITE_TITLE
 
 
 class UserRegisterView(FormView):
@@ -34,7 +34,7 @@ class UserRegisterView(FormView):
                 reverse_lazy('user:register_confirm', kwargs={ "token": activation_code}))
             
             send_mail(
-                subject=f"Код активації акаунта ({SITE_NAME})",
+                subject=f"Код активації акаунта ({SITE_TITLE})",
                 message=f"""
                     <h2>Код активації акаунта</h2>
                     Код: <b>{activation_code}</b>
@@ -176,7 +176,7 @@ class PasswordResetView(FormView):
                 reverse_lazy('user:password_reset_confirm', kwargs={ 'token': token }))
 
             send_mail(
-                subject=f"Відновлення паролю ({SITE_NAME})",
+                subject=f"Відновлення паролю ({SITE_TITLE})",
                 message=f'Щоб відновити пароль перейдіть за посиланням: {reset_url}',
                 from_email=EMAIL_HOST_USER,
                 recipient_list=[email,],

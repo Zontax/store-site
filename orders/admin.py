@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from orders.models import Order, OrderItem
 
 
@@ -47,4 +48,3 @@ class OrderItemAdmin(admin.ModelAdmin):
     search_fields = ['id',]
     search_fields = ['order']
     list_filter = ['sale_date']
-    
