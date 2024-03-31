@@ -32,7 +32,7 @@ $(document).ready(function () {
                 // Через 7 сек прибираєм сповіщення
                 setTimeout(function () {
                     successMessage.fadeOut(400)
-                }, 3500)
+                }, 5500)
 
                 // Увеличиваем количество товаров в корзине (отрисовка в шаблоне)
                 cartCount++
@@ -78,7 +78,7 @@ $(document).ready(function () {
                 // Через 7сек убираем сообщение
                 setTimeout(function () {
                     successMessage.fadeOut(250)
-                }, 3500)
+                }, 5500)
 
                 // Уменьшаем количество товаров в корзине (отрисовка)
                 cartCount -= data.quantity_deleted
@@ -150,7 +150,7 @@ $(document).ready(function () {
                 // Через 7сек прибираєм сповіщення
                 setTimeout(function () {
                     successMessage.fadeOut(250)
-                }, 3500)
+                }, 5500)
 
                 // Змінюєм кількість товарів в корзині
                 var goodsInCartCount = $('#goods-in-cart-count')
@@ -175,7 +175,7 @@ $(document).ready(function () {
         // І через 7 сек. прибираєм
         setTimeout(function () {
             notification.alert('close')
-        }, 3500)
+        }, 5500)
     }
 
     // Коли клікаєм на корзину то відкриваєм модальне вікно

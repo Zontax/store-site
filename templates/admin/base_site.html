@@ -6,8 +6,8 @@
 
 {% block branding %}
     <h1 id="site-name">
-        {% comment %} {{ site_header|default:_('Django administration') }}{% endcomment %} 
-        <a href="{% url 'admin:index' %}">{{ site_title }}</a>
+        {% comment %} {{ site_header|default:_('Django administration') }} {% endcomment %}
+        <a href="{% url 'admin:index' %}">Адмін панель</a>
     </h1>
 
     {% if user.is_anonymous %}

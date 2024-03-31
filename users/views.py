@@ -1,7 +1,8 @@
+from operator import truediv
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetConfirmView
 from django.contrib import auth, messages
 from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
@@ -10,7 +11,8 @@ from django.db.models import Prefetch
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import FormView
-from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, ResetTokenForm
+from requests import get
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, ResetTokenForm, ResetPasswordForm, SetNewPasswordForm
 from carts.models import Cart
 from orders.models import Order, OrderItem
 from users.services import generate_token
@@ -124,7 +126,7 @@ class UserLogoutView(View):
         if request.user.is_authenticated:
             messages.success(request, 'Ви вийшли з акаунта')
             auth.logout(request)
-        return redirect(reverse('main:index'))
+        return redirect('main:index')
 
 
 class ResetWaitView(FormView):
@@ -138,35 +140,101 @@ class ResetWaitView(FormView):
         return super().form_valid(form)
     
 
-def register_confirm(request: HttpRequest, token: str): 
-    try:
-        user = User.objects.get(activation_key=token)
+class UserRegisterConfirmView(View):
+    def get(self, request: HttpRequest, token):
+        try:
+            user = User.objects.get(activation_key=token)
+            
+        except User.DoesNotExist:
+            messages.error(request, 'Неправильний код активації або код застарів')
+            return redirect('user:reset_wait')
         
-    except User.DoesNotExist:
-        messages.error(request, 'Неправильний код активації або він застарів')
-        return redirect(reverse('user:reset_wait'))
-    
-    except Exception:
-        messages.success(request, 'Помилка активації')
-        return redirect(reverse('user:reset_wait'))
+        except Exception:
+            messages.error(request, 'Помилка активації')
+            return redirect('user:reset_wait')
 
-    user.is_active = True
-    user.activation_key = None
-    user.save(update_fields=['is_active', 'activation_key'])
+        user.is_active = True
+        user.activation_key = None
+        user.save(update_fields=['is_active', 'activation_key'])
 
-    session_key = request.session.session_key
-    
-    auth.login(request, user)
-    
-    anonymous_cart_products = Cart.objects.filter(session_key=session_key)
-    anonymous_cart_products.update(user=user)
-    anonymous_cart_products.update(session_key=None)
-    
-    messages.success(request, 'Ви успішно зареєструвались та увійшли в акаунт')
-    
-    return redirect(reverse('user:profile'))
+        session_key = request.session.session_key
+        
+        auth.login(request, user)
+        
+        anonymous_cart_products = Cart.objects.filter(session_key=session_key)
+        anonymous_cart_products.update(user=user)
+        anonymous_cart_products.update(session_key=None)
+        
+        messages.success(request, 'Ви успішно зареєструвались')
+        
+        return redirect('user:profile')
 
 
-def users_cart(request: HttpRequest):
+class PasswordResetView(FormView):
+    template_name = 'users/password_reset.html'
+    form_class = ResetPasswordForm
+    success_url = reverse_lazy('user:login')
+
+    def form_valid(self, form: ResetPasswordForm):
+        email = form.cleaned_data['email']
+        user: User = User.objects.filter(email=email).first()
+
+        if user:
+            token = generate_token()
+            user.activation_key = token
+            user.save()
+            reset_url = self.request.build_absolute_uri(
+                reverse_lazy('user:password_reset_confirm', kwargs={ 'token': token }))
+
+            send_mail(
+                subject=f"Відновлення паролю ({SITE_NAME})",
+                message=f'Щоб відновити пароль перейдіть за посиланням: {reset_url}',
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[email,],
+                fail_silently=False,
+            )
+            messages.success(self.request, 'Перевірте свою електронну пошту для відновлення паролю.')
+        else:
+            messages.error(self.request, 'Користувача з такою електронною поштою не знайдено.')
+
+        return super().form_valid(form)
+
+
+class UserPasswordResetConfirmView(FormView):
+    template_name = 'users/password_reset_confirm.html'
+    form_class = SetNewPasswordForm
+    success_url = reverse_lazy('user:profile')
+
+    def get(self, request, *args, **kwargs):
+        token = kwargs.get('token')
+        user = self.get_user_by_token(token)
+        
+        if user is None:
+            messages.error(self.request, 'Це посилання для зміни пароля застаріло')
+            return redirect('main:index')
+        
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form: SetNewPasswordForm):
+        token = self.kwargs.get('token')
+        user = self.get_user_by_token(token)
+        if user:
+            user.set_password(form.cleaned_data['password1'])
+            user.activation_key = None
+            user.save()
+            messages.success(self.request, 'Пароль успішно змінено. Увійдіть з новим паролем.')
+        else:
+            messages.error(self.request, 'Неправильний токен для зміни пароля.')
+        return super().form_valid(form)
+
+    def get_user_by_token(self, token):
+        try:
+            return User.objects.get(activation_key=token)
+        except User.DoesNotExist:
+            return None
+
+
+class UserCartView(View):
     
-    return render(request, 'users/users_cart.html')
+    def get(self, request: HttpRequest):
+        return render(request, 'users/users_cart.html')

@@ -58,3 +58,32 @@ class UserProfileForm(UserChangeForm):
 
 class ResetTokenForm(Form):
     token = CharField(required=True)
+
+
+class ResetPasswordForm(Form):
+    email = EmailField(required=True)
+
+
+class SetNewPasswordForm(Form):
+    password1 = CharField(label='Новий пароль')
+    password2 = CharField(label='Повторити пароль')
+    captcha = CaptchaField(label='Введіть текст з рисунка')
+
+    def clean_password1(self):
+        password1 = self.cleaned_data['password1']
+        try:
+            validate_password(password1)
+        except ValidationError as er:
+            self.add_error('password1', er)
+        return password1
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data['password1']
+        password2 = cleaned_data['password2']
+        
+        if password1 and password2 and password1 != password2:
+            self.add_error('password2', "Паролі не співпадають")
+            
+        return cleaned_data
