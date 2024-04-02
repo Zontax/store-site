@@ -1,5 +1,6 @@
 from django.http import HttpRequest
 
+import bleach
 from datetime import datetime
 from goods.models import Category
 from main.models import BaseAdvertisement
@@ -11,8 +12,8 @@ def base_processors(request: HttpRequest):
     advertisement = BaseAdvertisement.objects.filter(is_active=True).first()
     current_year = datetime.now().year
     
-    return { 'current_year': current_year, 
+    return { 'site_main_title': SITE_TITLE,
+             'advertisement': advertisement,  
+             'current_year': current_year, 
              'all_categories': categories,
-             'site_main_title': SITE_TITLE, 
-             'advertisement': advertisement, 
              }

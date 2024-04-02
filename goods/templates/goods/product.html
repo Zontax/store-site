@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load main_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
@@ -32,6 +33,12 @@
                         </div>
                         <div class="col-md-4 ">
                             <p class="product_id mt-3">id: {{ product.display_id }}</p>
+                            
+                            {% if user.is_staff %}
+                                <a href="/admin/goods/product/{{ product.id }}/change/" class="btn btn-dark">
+                                    Редагувати товар
+                                </a>
+                           {% endif %}
                         </div>
 
                         <!-- Збільшити  зображення в модальному вікні -->
@@ -58,7 +65,7 @@
                     <div class="card-body">
                         
                         <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text">{{ product.description|bleach_xss|safe }}</p>
                         <p class="card-text">Доступно на складі: {{ product.quantity }} шт</p>
 
                         
@@ -67,8 +74,6 @@
                             Купити
                         </a>
                         <strong>{{ product.sell_price|floatformat:'0' }}</strong> Грн
-                        
-                        <br>
                         <br>
                         <br>
                     </div>

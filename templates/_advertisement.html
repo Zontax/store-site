@@ -1,0 +1,10 @@
+{% load static cache %}
+{% load main_tags %}
+
+{% comment %} {% cache 30 advertisement %} {% endcomment %}
+    {% if advertisement %}
+        <div class="advertisement" style="{{ advertisement.css_style|bleach_xss|safe }}">
+            <h4>{{ advertisement.description|bleach_xss|safe }}</h4>
+        </div>
+    {% endif %}
+{% comment %} {% endcache %} {% endcomment %}

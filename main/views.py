@@ -1,13 +1,21 @@
 from django.http import HttpRequest
 from django.views import View
-from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+
+from goods.models import Product
 
 
 class IndexView(View):
     
     def get(self, request: HttpRequest):
-        return redirect(reverse('catalog:index', kwargs={'category_slug': 'all'}))
+        count = 3
+        random_goods = Product.objects.filter(is_active=True).order_by('?')[:count]
+        
+        context = {
+            'title': 'Головна',
+            'goods': random_goods,
+        }
+        return render(request, 'main/index.html', context)
 
 
 class AboutView(View):

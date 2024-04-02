@@ -13,13 +13,7 @@
 {% endblock %}
 
 {% block advertisement %}
-    {% cache 30 advertisement %}
-    {% if advertisement %}
-            <div class="advertisement" style="{{ advertisement.css_style }}">
-                <h4>{{ advertisement.description }}</h4>
-            </div>
-    {% endif %}
-    {% endcache %}
+    {% include '_advertisement.html' %}
 {% endblock %}
 
 {% block content %}

@@ -9,10 +9,12 @@ from django.http import HttpRequest
 from carts.models import Cart
 from orders.models import Order, OrderItem
 from orders.forms import CreateOrderForm
+import bleach
 
 
 @method_decorator(login_required, name='dispatch')
 class CreateOrderView(View):
+    title = 'Оформлення замовлення'
     
     def get(self, request: HttpRequest):
         initial = {
@@ -21,15 +23,18 @@ class CreateOrderView(View):
             'phone_number': request.user.phone_number
         }
         form = CreateOrderForm(initial=initial)
+        
         context = {
-            'title': 'Оформлення замовлення',
+            'title': self.title,
             'order': True,
             'form': form
         }
         return render(request, 'orders/create_order.html', context=context)
 
+
     def post(self, request):
         form = CreateOrderForm(data=request.POST)
+        
         if form.is_valid():
             try:
                 with transaction.atomic():
@@ -68,7 +73,7 @@ class CreateOrderView(View):
                         
                         cart_items.delete()
                         
-                        messages.success(request, 'Замовлення оформлено!')
+                        messages.success(request, 'Дякуємо за ваше замовлення! Ви можете відслідкувати статус замовлення в <a href="/user/profile/">особистому кабінеті</a>')
                         return redirect('user:profile')
                     
             except Exception as ex:
@@ -77,7 +82,7 @@ class CreateOrderView(View):
                 return redirect('orders:create_order')
         
         context = {
-            'title': 'Оформлення замовлення',
+            'title': self.title,
             'order': True,
             'form': form
         }
