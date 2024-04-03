@@ -10,10 +10,12 @@ class IndexView(View):
     def get(self, request: HttpRequest):
         count = 3
         random_goods = Product.objects.filter(is_active=True).order_by('?')[:count]
+        new_discounted_goods = Product.objects.filter(discount__gt=0, is_active=True)[:4]
         
         context = {
             'title': 'Головна',
             'goods': random_goods,
+            'new_discounted_goods': new_discounted_goods,
         }
         return render(request, 'main/index.html', context)
 

@@ -31,10 +31,12 @@ class CatalogView(View):
         
         paginator = Paginator(goods, GOODS_IN_PAGE)
         goods_in_page = paginator.page(int(page))
+        new_discounted_goods = Product.objects.filter(discount__gt=0, is_active=True)[:4]
         
         context = {
             'title': 'Каталог',
             'goods': goods_in_page,
+            'new_discounted_goods': new_discounted_goods,
             'slug_url': category_slug,
             'query': query
         }

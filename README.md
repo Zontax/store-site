@@ -1,1 +1,1 @@
-### Pet Store Site Project (Python Django 4.2.11)
+# Pet Simple Store Site Project (Python Django 4.2.11)

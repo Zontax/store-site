@@ -42,13 +42,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                         {% cache 60 category %}
-                        
                             {% for category in all_categories %}
-                            <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">
-                                    {{ category.name }}</a>
-                            </li>
+                                <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">
+                                        {{ category.name }}</a>
+                                </li>
                             {% endfor %}
-
                         {% endcache %}
                     </ul>
                 </li>
@@ -62,7 +60,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Профіль</a>
+                        Профіль ▾</a>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item text-white" href="{% url 'user:profile' %}">
@@ -99,7 +97,7 @@
                     name="q" 
                     placeholder="Пошук..." 
                     aria-label="Search">
-                <button class="btn btn-outline-success text-white me-3">Пошук</button>
+                <button class="btn btn-outline-success text-white me-3">Знайти</button>
             </form>
 
             {% if user.is_authenticated %}
@@ -150,10 +148,10 @@
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-body-secondary" href="#">
+            <li class="ms-3"><a class="text-body-secondary" href="{% url 'main:about' %}">
                     <i class="bi bi-instagram"></i>
             </li>
-            <li class="ms-3"><a class="text-body-secondary" href="#">
+            <li class="ms-3"><a class="text-body-secondary" href="{% url 'main:about' %}">
                     <i class="bi bi-facebook"></i>
             </li>
         </ul>

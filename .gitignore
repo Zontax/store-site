@@ -137,6 +137,8 @@ GitHub.sublime-settings
 .history
 
 # Other
+
 docker-compose.yml
 DEV.md
 media/
+staticfiles/

@@ -7,7 +7,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-env.read_env(os.path.join(BASE_DIR, '.env'))
+env.read_env(BASE_DIR / '.env')
 
 SECRET_KEY =  env.str('DJANGO_SECRET_KEY', default='')
 
@@ -74,7 +74,8 @@ MIDDLEWARE = [
     # Apps
     'main.middleware.LogerMiddleware',
     # Installs
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
     # 'allauth.account.middleware.AccountMiddleware',  
 ]
 
@@ -143,9 +144,13 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = 'media/'
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 INTERNAL_IPS = ['127.0.0.1']
@@ -153,7 +158,7 @@ INTERNAL_IPS = ['127.0.0.1']
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'media/cache'),
+        'LOCATION': BASE_DIR / 'media/cache',
     }
 }
 

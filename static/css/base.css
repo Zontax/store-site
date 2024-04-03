@@ -12,7 +12,7 @@ div.advertisement {
     justify-content: center;
     align-items: center;
     max-width: 101.1%;
-    margin: -17px;
+    margin-top: -17px;
     padding: 0px;
     padding-top: 5px;
     background-color: rgb(222, 208, 19);
@@ -128,5 +128,9 @@ p.card-text {
 }
 
 .card.border-primary.rounded.custom-shadow {
+    border: 0;
+}
+
+.page-link.bg-dark.text-white {
     border: 0;
 }

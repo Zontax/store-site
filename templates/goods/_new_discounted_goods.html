@@ -1,0 +1,14 @@
+{% load static %}
+
+<br>
+<div class="bg-dark p-4 mb-4 mx-2 rounded custom-shadow">
+    <h5 class="text-white">Нові знижки</h5>
+    <br>
+    {% for product in new_discounted_goods %}  
+        <p>
+            <a class="text-decoration-none" href="{% url 'catalog:product' product.slug %}">
+                {{ product.name }}
+            </a>
+        </p>
+    {% endfor %}
+</div>

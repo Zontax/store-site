@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static cache %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/fix_footer.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{% endblock %}
+
+{% block advertisement %}
+    {% include '_advertisement.html' %}
+{% endblock %}
+
+{% block modal_cart %}
+    {% include '_cart_button.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row mt-1">
+
+    <div class="col-lg-3">
+        {% include 'goods/_new_discounted_goods.html' %}
+    </div>
+
+
+    <div class="col-lg-9">
+        <div class="row">
+            
+            <div class="custom-banner-container">
+                <div class="p-4 mb-4 mx-2 rounded custom-shadow custom-banner"></div>
+            </div>
+
+            {% if goods %}
+                {% for product in goods %}
+                    {% if product.is_active %}
+                        <div class="col-lg-4 col-md-6 p-4">
+                            {% include 'goods/_product_card.html' %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+                    <h5>На сайті поки немає товарів</h5>
+                </div>
+            {% endif %}
+
+        </div>
+    </div> 
+</div>
+
+{% endblock %}

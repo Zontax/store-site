@@ -223,7 +223,6 @@ class UserPasswordResetConfirmView(FormView):
             return None
 
 
-@method_decorator(login_required, name='dispatch')
 class UserCartView(View):
     
     def get(self, request: HttpRequest):

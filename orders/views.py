@@ -9,7 +9,6 @@ from django.http import HttpRequest
 from carts.models import Cart
 from orders.models import Order, OrderItem
 from orders.forms import CreateOrderForm
-import bleach
 
 
 @method_decorator(login_required, name='dispatch')
@@ -39,7 +38,7 @@ class CreateOrderView(View):
             try:
                 with transaction.atomic():
                     user = request.user
-                    cart_items = Cart.objects.all()
+                    cart_items = Cart.objects.filter(user=user)
                     
                     if cart_items.exists():
                         order = Order.objects.create(

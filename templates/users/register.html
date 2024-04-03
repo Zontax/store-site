@@ -113,8 +113,9 @@
                                     {% endif %}
                                 </div>
                                 
-                                <div class="col-md-6 mb-3">
-                                    <label for="id_captcha" class="form-label">{{ form.captcha.label }}*</label>
+                                <label for="id_captcha" class="form-label">{{ form.captcha.label }}*</label><hr>
+                                <div class="mb-3">
+                                    
                                     {{ form.captcha }}
 
                                     {% if form.captcha.errors %}

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
 
-from app import settings
+from . import settings
 
 
 urlpatterns = [    
@@ -14,11 +14,10 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='order')),
     # Installs urls
     path('captcha/', include('captcha.urls')),
-    #1path('11accounts/', include('allauth.urls')),
-]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += [
-        path('__debug__/', include('debug_toolbar.urls')),  
-    ]    
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]
