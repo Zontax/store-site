@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'main.middleware.LogerMiddleware',
     # Installs
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'silk.middleware.SilkyMiddleware',
+
     # 'allauth.account.middleware.AccountMiddleware',  
 ]
 

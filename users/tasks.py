@@ -10,5 +10,6 @@ def clear_activation_key(user_id):
         user = User.objects.get(pk=user_id)
         user.activation_key = None
         user.save()
+        print(f'Секретний ключ {user.username} очищено')
     except User.DoesNotExist:
-        pass
+        print('User does not exist')

@@ -16,6 +16,7 @@ from users.models import User
 from carts.models import Cart
 from orders.models import Order, OrderItem
 from app.settings import EMAIL_HOST_USER, SITE_TITLE
+from users.tasks import clear_activation_key
 
 
 class UserRegisterView(FormView):
@@ -51,6 +52,7 @@ class UserRegisterView(FormView):
             user.username = form.cleaned_data['username']
             user.set_password(form.cleaned_data['password1'])
             user.save()
+            # clear_activation_key.apply_async((user.pk,), countdown=300)
         
         messages.success(self.request, 'На ваш email надіслано лист з посиланням для підтвердження акаунта')
         return super().form_valid(form)
