@@ -1,6 +1,7 @@
-import django.conf.global_settings
-import os, environ
+from django.core.management.utils import get_random_secret_key
 from pathlib import Path
+import environ
+
 
 # See https://docs.djangoproject.com/en/4.2/
 
@@ -9,9 +10,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 env.read_env(BASE_DIR / '.env')
 
-SECRET_KEY =  env.str('DJANGO_SECRET_KEY', default='')
+SECRET_KEY =  env.str('DJANGO_SECRET_KEY', get_random_secret_key())
 
-DEBUG = env.bool('DJANGO_DEBUG', default=False)
+DEBUG = env.bool('DJANGO_DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,27 +43,6 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',
 ]
 
-# django_recaptcha
-RECAPTCHA_PUBLIC_KEY = env.str('RECAPTCHA_PUBLIC_KEY')
-RECAPTCHA_PRIVATE_KEY = env.str('RECAPTCHA_PRIVATE_KEY')
-RECAPTCHA_DOMAIN = env.str('RECAPTCHA_DOMAIN')
-
-# django-allauth
-# https://docs.allauth.org/en/latest/installation/quickstart.html
-SITE_ID = 1
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    },
-}
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,8 +55,6 @@ MIDDLEWARE = [
     'main.middleware.LogerMiddleware',
     # Installs
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-
-    # 'allauth.account.middleware.AccountMiddleware',  
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -92,17 +70,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.base_processors', # actual year
+                # Apps
+                'main.context_processors.base_processors',
             ],
         },
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    # django-allauth
-    # 'allauth.account.auth_backends.AuthenticationBackend',
-]
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
@@ -143,15 +118,15 @@ TIME_ZONE = 'Europe/Kiev'
 USE_I18N = True
 USE_TZ = True
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -174,11 +149,12 @@ LOGIN_URL = 'user:login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_PORT = 587 # env.int('EMAIL_PORT', default=501),
-EMAIL_HOST = env.str('EMAIL_HOST', default=''),
-EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default=''),
-EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default=''),
+EMAIL_PORT = env.int('EMAIL_PORT', 587),
+EMAIL_HOST = env.str('EMAIL_HOST', ''),
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', ''),
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', ''),
 
-# Кастомні змінні
-GOODS_IN_PAGE = 6 # Товарів на сторінці
+# Custom vars
+
 SITE_TITLE = env.str('SITE_TITLE', 'Site')
+GOODS_IN_PAGE = 6

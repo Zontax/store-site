@@ -14,7 +14,7 @@ class User(AbstractUser):
     activation_key = CharField('Код активації', max_length=80, blank=True, null=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
     
     class Meta():
         db_table = 'users'
