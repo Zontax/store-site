@@ -1,4 +1,4 @@
-from django.db.models import Model, CharField, SlugField, BooleanField, TextField, ImageField, DecimalField, PositiveIntegerField, DateTimeField, ForeignKey
+from django.db.models import Model, Index, CharField, SlugField, BooleanField, TextField, ImageField, DecimalField, PositiveIntegerField, DateTimeField, ForeignKey
 from django.db import models
 from django.urls import reverse
 
@@ -37,9 +37,12 @@ class Product(Model):
     
     class Meta():
         db_table = 'products'
+        indexes = [Index(fields=['id', 'name', 'slug', 'description', 'meta_keywords']),]
+        ordering = ('-created_timestamp',)
+        
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
-        ordering = ('-created_timestamp',)
+        
         
         
     def __str__(self):

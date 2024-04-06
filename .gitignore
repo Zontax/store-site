@@ -137,7 +137,7 @@ GitHub.sublime-settings
 .history
 
 # Other
-
+*.sqlite3
 docker-compose.yml
 DEV.md
 media/
