@@ -2,7 +2,6 @@ from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 import environ
 
-
 # See https://docs.djangoproject.com/en/4.2/
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,11 +35,6 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'phonenumber_field',
     'captcha',
-    # 'django_recaptcha',  
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -128,7 +122,7 @@ STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = []
 
 CACHES = {
     'default': {
