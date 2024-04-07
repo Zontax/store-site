@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 
+from termcolor import cprint
+
 
 class LogerMiddleware():
     
@@ -7,7 +9,7 @@ class LogerMiddleware():
         self._get_responce = get_responce
     
     def __call__(self, request: HttpResponse):
-        # print(f'REQUEST: {request.user}')    
+        cprint(f'{request.user}', 'green', 'on_black')
         response = self._get_responce(request)
-        #
+        
         return response

@@ -39,7 +39,7 @@ class CartAddProductAPI(View):
         cart_items_html = render_to_string('carts/_included_cart.html', { 'carts': user_carts }, request=request)
         
         response_data = {
-            "message": f'<b>{product.name}</b> додано в корзину (<b>{carts.first().quantity}</b> шт)',
+            "message": f'<b>{product.name}</b> додано в кошик (<b>{carts.first().quantity}</b> шт)',
             "cart_items_html": cart_items_html
         }
         return JsonResponse(response_data)

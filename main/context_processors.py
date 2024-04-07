@@ -1,6 +1,5 @@
 from django.http import HttpRequest
 
-import bleach
 from datetime import datetime
 from goods.models import Category
 from main.models import BaseAdvertisement

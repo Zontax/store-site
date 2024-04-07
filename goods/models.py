@@ -27,7 +27,7 @@ class Product(Model):
     product_code = CharField('Код товара', max_length=25, unique=True, blank=True, null=True)
     description = TextField('Опис', max_length=1000, blank=True, null=True)
     meta_keywords = CharField('Meta інформація', max_length=400, blank=True, null=True)
-    image = ImageField('Зображення', upload_to='goods_images', blank=True, null=True)
+    image = ImageField('Зображення', upload_to='images/goods_picture', blank=True, null=True)
     price = DecimalField('Ціна', default=0.00, max_digits=10, decimal_places=2)
     discount = DecimalField('Знижка, %', default=0.00, max_digits=4, decimal_places=2)
     quantity = PositiveIntegerField('На складі', default=0)

@@ -10,7 +10,7 @@ class User(AbstractUser):
     email = models.EmailField('Пошта Email', unique=True)
     description = TextField('Опис профілю', max_length=500, blank=True, null=True)
     phone_number = PhoneNumberField('Номер телефону', region='UA', blank=True, null=True)
-    avatar_image = ImageField('Аватар', upload_to='users_avatar_images', blank=True, null=True)
+    avatar_image = ImageField('Аватар', upload_to='images/users_avatar', blank=True, null=True)
     activation_key = CharField('Код активації', max_length=80, blank=True, null=True)
     
     USERNAME_FIELD = 'email'
