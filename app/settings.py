@@ -13,7 +13,7 @@ SECRET_KEY =  env.str('DJANGO_SECRET_KEY', get_random_secret_key())
 
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [env.str('ALLOWED_HOSTS', '*')]
 
 INSTALLED_APPS = [
     # Django
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     # Installs
     'debug_toolbar',
     'phonenumber_field',
-    'captcha',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +140,10 @@ EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+RECAPTCHA_PUBLIC_KEY = env.str('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env.str('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_DOMAIN = env.str('RECAPTCHA_DOMAIN')
 
 # Custom vars
 SITE_TITLE = env.str('SITE_TITLE', 'Site')
