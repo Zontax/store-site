@@ -10,15 +10,4 @@ class UserAdmin(admin.ModelAdmin):
     inlines = [CartTabAdmin, OrderTabulareAdmin]
     search_fields = ['username', 'first_name', 'last_name', 'email', 'phone_number']
     list_filter = ['date_joined', 'last_login']
-    readonly_fields = ['username','email', 'phone_number', 'password', 'avatar_image', 'date_joined', 'last_login', 'is_superuser']
-
-    # fields = [
-    #     'username',
-    #     ('first_name', 'last_name'),
-    #     'email',
-    #     'phone_number',
-    #     'password',
-    #     'avatar_image',
-    #     'date_joined', 
-    #     'last_login',
-    # ]
+    readonly_fields = ['username','email', 'password', 'date_joined', 'last_login', 'is_superuser']
