@@ -93,7 +93,7 @@
                                 {% endif %}
                             </div>
                             <div class="col-md-12 mb-3">
-                                <label for="id_phone_number" class="form-label">Номер телефону* (+380-XX-XXX-XX-XX)</label>
+                                <label for="id_phone_number" class="form-label">Номер телефону (+380-XX-XXX-XX-XX)</label>
                                 <input type="tel" class="form-control" pattern="(\+380\d{9}|0\d{9})"
                                     value="{{ form.phone_number.value|default:'' }}" 
                                     id="id_phone_number"
@@ -119,7 +119,7 @@
                     <h3 class="text-center mb-4">Кошик</h3>
 
                     <div class="container" id="cart-items-container">
-                        {% include 'carts/_included_cart.html' %} <!-- Розмітка коризини --> 
+                        {% include 'carts/_included_cart.html' %} 
                     </div>
 
                 </div>

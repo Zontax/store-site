@@ -7,22 +7,22 @@ from phonenumber_field.formfields import PhoneNumberField
 from django_recaptcha.fields import ReCaptchaField
 from users.models import User
 
-
 User = get_user_model()
 
+
 class UserLoginForm(AuthenticationForm):    
-    username = CharField(label="Пошта Email")
-    password = CharField(label='Пароль')
+    username = CharField()
+    password = CharField()
     captcha = ReCaptchaField()
 
         
 class UserRegisterForm(UserCreationForm):    
     first_name = CharField()
     last_name = CharField(required=False)
-    username = CharField(label="Ім'я користувача")
-    email = EmailField(label="Пошта Email")
-    password1 = CharField(label='Пароль')
-    password2 = CharField(label='Повторити пароль')
+    username = CharField()
+    email = EmailField()
+    password1 = CharField()
+    password2 = CharField()
     captcha = ReCaptchaField()
     
     class Meta(UserCreationForm.Meta):
@@ -36,8 +36,8 @@ class UserRegisterForm(UserCreationForm):
             'password2',
             'captcha'
         )
-    
-    
+
+
 class UserProfileForm(UserChangeForm):
     avatar_image = ImageField(required=False)
     first_name = CharField()
@@ -45,7 +45,7 @@ class UserProfileForm(UserChangeForm):
     username = CharField()
     email = EmailField(disabled=True)
     phone_number = PhoneNumberField(region="UA", required=False)
-    
+
     class Meta:
         model = User
         fields = (
@@ -59,16 +59,18 @@ class UserProfileForm(UserChangeForm):
 
 
 class ResetTokenForm(Form):
-    token = CharField(required=True)
+    token = CharField()
+    captcha = ReCaptchaField()
 
 
 class ResetPasswordForm(Form):
-    email = EmailField(required=True)
+    email = EmailField()
+    captcha = ReCaptchaField()
 
 
 class SetNewPasswordForm(Form):
-    password1 = CharField(label='Новий пароль')
-    password2 = CharField(label='Повторити пароль')
+    password1 = CharField()
+    password2 = CharField()
     captcha = ReCaptchaField()
 
     def clean_password1(self):
@@ -86,6 +88,6 @@ class SetNewPasswordForm(Form):
         password2 = cleaned_data['password2']
         
         if password1 and password2 and password1 != password2:
-            self.add_error('password2', "Паролі не співпадають")
-            
+            self.add_error('password2', 'Паролі не співпадають')
+        
         return cleaned_data

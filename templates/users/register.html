@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_username" class="form-label">{{ form.username.label }}*</label>
+                                    <label for="id_username" class="form-label">Ім'я користувача*</label>
                                     <input type="text" class="form-control"
                                         value="{{ form.username.value|default:'' }}" 
                                         id="id_username"
@@ -75,12 +75,12 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_email" class="form-label">{{ form.email.label }}*</label>
+                                    <label for="id_email" class="form-label">Email*</label>
                                     <input type="email" class="form-control"
                                         value="{{ form.email.value|default:'' }}" 
                                         id="id_email"
                                         name="email"
-                                        placeholder="Введіть ваш email" 
+                                        placeholder="Введіть ваш Email" 
                                         required>
                                     {% if form.email.errors %}
                                         <div class="alert alert-danger alert-dismissible fade show">{{ form.email.errors }}</div>
@@ -88,7 +88,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_password1" class="form-label">{{ form.password1.label }}*</label>
+                                    <label for="id_password1" class="form-label">Пароль*</label>
                                     <input type="password" class="form-control" 
                                         value="{{ form.password1.value|default:'' }}" 
                                         id="id_password1"
@@ -101,7 +101,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_password2" class="form-label">{{ form.password2.label }}*</label>
+                                    <label for="id_password2" class="form-label">Повторити пароль*</label>
                                     <input type="password" class="form-control" 
                                         value="{{ form.password2.value|default:'' }}" 
                                         id="id_password2"
@@ -115,9 +115,7 @@
                                 
                                 <label for="id_captcha" class="form-label">{{ form.captcha.label }}*</label><hr>
                                 <div class="mb-3">
-                                    
                                     {{ form.captcha }}
-
                                     {% if form.captcha.errors %}
                                         <div class="alert alert-danger alert-dismissible fade show">{{ form.captcha.errors }}</div>
                                     {% endif %}
