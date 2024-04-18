@@ -13,6 +13,10 @@ SECRET_KEY =  env.str('DJANGO_SECRET_KEY', get_random_secret_key())
 
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
+USE_SQLITE = env.bool('USE_SQLITE', True)
+
+SQLITE_DB_NAME = env.str('SQLITE_DB_NAME')
+
 ALLOWED_HOSTS = [env.str('ALLOWED_HOSTS', '*')]
 
 INSTALLED_APPS = [
@@ -76,20 +80,23 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
 WSGI_APPLICATION = 'app.wsgi.application'
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-DATABASES = {
-    'default': {
+
+if USE_SQLITE:
+    DEFAULT_DATABASE = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / SQLITE_DB_NAME,
+    }
+else:
+    DEFAULT_DATABASE = {
         'ENGINE': env.str('DB_ENGINE'),
         'NAME': env.str('DB_NAME'),
         'USER': env.str('DB_USER'),
         'PASSWORD': env.str('DB_PASSWORD'),
         'HOST': env.str('DB_HOST'),
         'PORT': env.str('DB_PORT'),
-    },
-    'sqlite3': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'store-site.sqlite3',
-    },
-}
+    }
+
+DATABASES = { 'default': DEFAULT_DATABASE }
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -131,7 +138,6 @@ CACHES = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
-LOGOUT_REDIRECT_URL = 'main:index'
 LOGIN_URL = 'user:login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

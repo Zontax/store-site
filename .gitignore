@@ -142,3 +142,5 @@ docker-compose.yml
 DEV.md
 media/
 staticfiles/
+Dockerfile
+.env.docker

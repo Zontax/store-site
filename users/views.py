@@ -67,10 +67,10 @@ class UserLoginView(LoginView):
     template_name = 'users/login.html'
 
     def get_success_url(self):
-        # next_url = self.request.POST['next']
-        # if next_url and next_url != reverse('user:logout'):
-        #     return redirect(next_url)
-    
+        next_url = self.request.GET.get('next') or self.request.POST.get('next')
+        if next_url:
+            return next_url
+        
         return reverse('user:profile')
 
     
@@ -92,7 +92,7 @@ class UserProfileView(View):
         return render(request, self.template_name, context)
         
         
-    def post(self, request):
+    def post(self, request: HttpRequest):
         form = UserProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         
         if form.is_valid():
@@ -114,10 +114,12 @@ class UserProfileView(View):
 class UserLogoutView(View): 
        
     def get(self, request: HttpRequest):
+        next_page = request.GET.get('next', 'main:index')
+        
         if request.user.is_authenticated:
             messages.success(request, 'Ви вийшли з акаунта')
             auth.logout(request)
-        return redirect('main:index')
+        return redirect(next_page)
 
 
 class ResetWaitView(FormView):
@@ -196,7 +198,7 @@ class UserPasswordResetConfirmView(FormView):
     form_class = SetNewPasswordForm
     success_url = reverse_lazy('user:profile')
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs):
         token = kwargs.get('token')
         user = self.get_user_by_token(token)
         
@@ -205,6 +207,7 @@ class UserPasswordResetConfirmView(FormView):
             return redirect('main:index')
         
         return super().get(request, *args, **kwargs)
+
 
     def form_valid(self, form: SetNewPasswordForm):
         token = self.kwargs.get('token')
@@ -217,6 +220,7 @@ class UserPasswordResetConfirmView(FormView):
         else:
             messages.error(self.request, 'Неправильний токен для зміни пароля.')
         return super().form_valid(form)
+
 
     def get_user_by_token(self, token):
         try:
